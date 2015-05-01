@@ -8,7 +8,28 @@ and open the template in the editor.
     Author     : Florian
 */
 
-html{
-    margin: 0px;
-    background-color: white;
+.page {
+    background-color: #4D505B;
+    font-family: 'Indie Flower', cursive;
 }
+
+#head {
+    background-color: #CF4858;
+    color: white;
+    border: none;
+    font-size:xx-large;
+    text-align: center;
+}
+
+#button {
+    background-color: #F4AC42;
+    color: black;
+    border: none;
+    font-size:x-large;
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    margin-top: auto;
+}
+
+
+
