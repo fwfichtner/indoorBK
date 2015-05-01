@@ -4,25 +4,38 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : May 1, 2015, 3:52:40 PM
-    Author     : Florian
+    Created on : May 1, 2015, 5:00:11 PM
 */
 
-.buttondemoBasicUsage section {
-  background: #f7f7f7;
-  border-radius: 3px;
-  text-align: center;
-  margin: 1em;
-  position: relative !important;
-  padding-bottom: 10px; }
-.buttondemoBasicUsage md-content {
-  margin-right: 7px; }
-.buttondemoBasicUsage section .md-button {
-  margin-top: 16px;
-  margin-bottom: 16px; }
-.buttondemoBasicUsage .label {
-  position: absolute;
-  bottom: 5px;
-  left: 7px;
-  font-size: 14px;
-  opacity: 0.54; }
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.page {
+    background-color: #4D505B;
+    font-family: 'Indie Flower', cursive;
+}
+
+#head {
+    height: 6vh;
+    background-color: #CF4858;
+    color: white;
+    border: none;
+    font-size:xx-large;
+    padding-top: 1vh;
+    text-align: center;
+}
+
+#button {
+    background-color: #F4AC42;
+    color: black;
+    border: none;
+    font-size:x-large;
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    margin-bottom: 30vh;
+}
+
+
+

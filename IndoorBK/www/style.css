@@ -5,19 +5,29 @@ and open the template in the editor.
 */
 /* 
     Created on : May 1, 2015, 5:00:11 PM
-    Author     : Florian
 */
+
+body {
+    padding: 0;
+    margin: 0;
+}
 
 .page {
     background-color: #4D505B;
     font-family: 'Indie Flower', cursive;
 }
 
+#map, #nextAppoint {
+    height: 70vh;
+}
+
 #head {
+    height: 6vh;
     background-color: #CF4858;
     color: white;
     border: none;
     font-size:xx-large;
+    padding-top: 1vh;
     text-align: center;
 }
 
@@ -28,7 +38,6 @@ and open the template in the editor.
     font-size:x-large;
     text-align: center;
     font-family: 'Indie Flower', cursive;
-    margin-top: auto;
 }
 
 
