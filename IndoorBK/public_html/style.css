@@ -8,3 +8,7 @@ and open the template in the editor.
     Author     : Florian
 */
 
+html{
+    margin: 0px;
+    background-color: white;
+}
