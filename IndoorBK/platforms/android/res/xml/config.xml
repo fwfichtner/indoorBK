@@ -10,7 +10,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="Calendar">
-        <param name="android-package" value="nl.xservices.plugins.Calendar" />
-    </feature>
 </widget>

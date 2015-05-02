@@ -7,34 +7,16 @@
         "files": {
             "res/xml/config.xml": {
                 "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
-                            "count": 1
-                        }
-                    ]
+                    "/*": []
                 }
             },
             "AndroidManifest.xml": {
                 "parents": {
-                    "/manifest": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
-                            "count": 1
-                        }
-                    ]
+                    "/manifest": []
                 }
             }
         }
     },
-    "installed_plugins": {
-        "nl.x-services.plugins.calendar": {
-            "PACKAGE_NAME": "com.coolappz.IndoorBK"
-        }
-    },
+    "installed_plugins": {},
     "dependent_plugins": {}
 }
