@@ -3,8 +3,10 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
+        <title>Indoor navigation app</title>
+        
         <!-- Font --> 
-        <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
         <!-- Mapbox -->
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
@@ -27,12 +29,14 @@
             <div data-role="header" id="head">
                 Indoor BK
             </div>
-        <!-- Content-->
+            
+            <!-- Content-->
             <div data-role="main" class="ui-content">
                 <div id="nextAppoint">
-                    <p>Your next appointment is:</p>
-                    Appointment comes here!
+                    <!-- appointment comes here-->
                 </div>
+                
+                <!-- Go navigate button -->
                 <a href="#routing" class="ui-btn" id="button1">Bring me there!</a>
             </div>
            </div> 
@@ -46,6 +50,8 @@
             <!-- Content-->
             <div data-role="main" class="ui-content">
                 <div id="map">Map goes here!</div>
+                
+                <!-- Back to start button -->
                 <a href="#pageone" class="ui-btn" id="button2">Go to Start</a>
             </div>
         </div> 

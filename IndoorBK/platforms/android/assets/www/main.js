@@ -13,7 +13,13 @@ var checkCalendar = function () {
 
     prevDate = year + "/" + month + "/" + prevDay;
     curDate = year + "/" + month + "/" + day;
-    alert("Date today: "+curDate+", Date yesterday: "+ prevDate);
+    //alert("Date today: "+curDate+", Date yesterday: "+ prevDate);
+    
+    if (!window.plugins.calendar) {
+        alert("calendar plugin works");
+    } else {
+        alert("the calendar plugin doesn't work");
+    }
     
     var success = function(message) { alert("Success: " + JSON.stringify(message)); };
     var error = function(message) { alert("Error: " + message); };

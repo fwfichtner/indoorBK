@@ -14,7 +14,7 @@ body {
 
 .page {
     background-color: #4D505B;
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Open Sans', cursive;
     color: white;
 }
 
@@ -40,7 +40,6 @@ body {
     border: none;
     font-size:x-large;
     text-align: center;
-    font-family: 'Indie Flower', cursive;
 }
 
 p {
