@@ -14,31 +14,36 @@ body {
 
 .page {
     background-color: #4D505B;
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Open Sans', cursive;
+    color: white;
 }
 
 #map, #nextAppoint {
     height: 70vh;
+    text-align: center;
+    padding: 5px;
 }
 
 #head {
-    height: 6vh;
     background-color: #CF4858;
-    color: white;
     border: none;
     font-size:xx-large;
     padding-top: 1vh;
+    padding-bottom: 1vh;
     text-align: center;
+    color: black;
 }
 
-#button {
+#button1, #button2 {
     background-color: #F4AC42;
     color: black;
     border: none;
     font-size:x-large;
     text-align: center;
-    font-family: 'Indie Flower', cursive;
 }
 
-
-
+p {
+    text-decoration: underline;
+    font-size: x-large;
+    color: white;
+}

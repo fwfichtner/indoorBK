@@ -18,7 +18,7 @@
         <!-- Own JS + CSS --> 
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <script src="main.js" type="text/javascript"></script>
-
+        
     </head>
     <body>
 
@@ -29,9 +29,13 @@
             </div>
         <!-- Content-->
             <div data-role="main" class="ui-content">
-                <a href="#routing" class="ui-btn" id="button">Bring me there!</a>
+                <div id="nextAppoint">
+                    <p>Your next appointment is:</p>
+                    Appointment comes here!
+                </div>
+                <a href="#routing" class="ui-btn" id="button1">Bring me there!</a>
             </div>
-        </div> 
+           </div> 
 
         <!-- Second page-->
         <div data-role="page" class="page" id="routing">
@@ -41,10 +45,10 @@
             
             <!-- Content-->
             <div data-role="main" class="ui-content">
-                <div id="map"></div>
-            <a href="#pageone" class="ui-btn" id="button">Go to Start</a>
-        </div>
-    </div> 
+                <div id="map">Map goes here!</div>
+                <a href="#pageone" class="ui-btn" id="button2">Go to Start</a>
+            </div>
+        </div> 
 
     </body>
 </html>
