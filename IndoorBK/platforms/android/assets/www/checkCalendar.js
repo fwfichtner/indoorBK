@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+//This file checks the user's calendar and outputs the next appointment to 
+//index.html and to the server. 
+
 var checkCalendar = function () {
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
