@@ -29,12 +29,13 @@ D:\indoorBK\IndoorBK\platforms\android\ant-build\res\drawable-port-xhdpi\screen.
 D:\indoorBK\IndoorBK\platforms\android\ant-build\res\drawable-xhdpi\icon.png \
 D:\indoorBK\IndoorBK\platforms\android\assets\www \
 D:\indoorBK\IndoorBK\platforms\android\assets\_where-is-www.txt \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\checkCalendar.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\cordova.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\cordova_plugins.js \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\getRSSi.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\index.html \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.min.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.css \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.js \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\main.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
 D:\indoorBK\IndoorBK\platforms\android\ant-build\AndroidManifest.xml \
