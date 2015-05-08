@@ -6,3 +6,7 @@
 
 //Here we should write the module that retrieves the RSSi values of the WiFi 
 //networks and sends it to the server. 
+
+// https://github.com/parsonsmatt/WifiWizard
+// from WifiWizard we should use: WifiWizard.getScanResults([options], listHandler, fail);
+
