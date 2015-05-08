@@ -39,6 +39,15 @@ D:\indoorBK\IndoorBK\platforms\android\assets\www\index.html \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.min.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.css \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.js \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\quickstart.js \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\quickstart_google_example.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard\www \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard\www\WifiWizard.js \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\test \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\www \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\test\tests.js \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\www\Calendar.js \
 D:\indoorBK\IndoorBK\platforms\android\ant-build\AndroidManifest.xml \
