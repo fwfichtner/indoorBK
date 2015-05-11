@@ -42,6 +42,7 @@ D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\quickstart_google_example.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\WifiWizard.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard\www \
