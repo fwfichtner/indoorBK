@@ -11,7 +11,7 @@
 var print = function(text) {
         $("#nextAppoint").html(text);
     }
-
+//
 //function checkCalendar (startDate, endDate) {
 //    // list all events in a date range (only supported on Android for now)
 //    var events = window.plugins.calendar.listEventsInRange(startDate,endDate,success,error);
