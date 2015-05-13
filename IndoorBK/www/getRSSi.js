@@ -21,7 +21,7 @@ function getRSSi(){
         // Check the results of the getScanResults
         var listHandler = function (list) {
             alert("listHandler");
-            print(list);
+            print(list.toString());
             
             /*
              * Here we need to select the five networks with the highest signal

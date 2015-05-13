@@ -7,11 +7,10 @@
 //This file checks the user's calendar and outputs the next appointment to 
 //index.html and to the server. 
 
-
 // Call the print function to add text to the HTML div with the "nextAppoint" id in index.html
 var print = function(text) {
         $("#nextAppoint").html(text);
-    }
+    };
 //
 //function checkCalendar (startDate, endDate) {
 //    // list all events in a date range (only supported on Android for now)
@@ -37,4 +36,3 @@ var print = function(text) {
 //    //alert(today);
 //}
 //window.onload=checkCalendar(checkDate(0), checkDate(1));
-
