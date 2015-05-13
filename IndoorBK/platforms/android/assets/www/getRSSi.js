@@ -33,7 +33,7 @@ function getRSSi(){
         // Check the results of startScan and call getScanResults
         var win = function(list) {
             alert("win");
-            //print(list);
+            print(list);
             /*
              * Here we have a list of networks at our disposal. I don't know 
              * if it's necessary to call this function, but that's something we
