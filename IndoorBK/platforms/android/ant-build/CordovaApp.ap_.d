@@ -44,11 +44,6 @@ D:\indoorBK\IndoorBK\platforms\android\assets\www\quickstart_google_example.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\WifiWizard.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard\www \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\com.pylonproducts.wifiwizard\www\WifiWizard.js \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\test \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\www \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\test\tests.js \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins\nl.x-services.plugins.calendar\www\Calendar.js \
 D:\indoorBK\IndoorBK\platforms\android\ant-build\AndroidManifest.xml \
