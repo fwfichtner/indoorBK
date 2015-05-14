@@ -8,29 +8,6 @@ function getRSSi(){
         $("#nextAppoint").html(text);
     }
 
-    if (WifiWizard){
-        // Check the results of the getScanResults
-        var listHandler = function (list) {
-            alert("listHandler");
-            print(list.toString());
-            
-             /*
-             * Here we need to select the five networks with the highest signal
-             * strength and send it to the server.
-             * 
-             */
-            
-            var stringNetworks = new String();
-            
-            for (var i = 0; i < list.length; i++) {
-                var network = "SSID: " + list[i].SSID + " RSSI: " + list[i].level + "\n";
-                stringNetworks += network;
-            }
-            
-            print(stringNetworks);         
-
-        };
-
     // Check the results of the getScanResults
     var listHandler = function (list) {      
          /*
