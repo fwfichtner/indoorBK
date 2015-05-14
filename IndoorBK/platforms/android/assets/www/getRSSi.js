@@ -1,14 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 //Here we should write the module that retrieves the RSSi values of the WiFi 
 //networks and sends it to the server. 
-
 // https://github.com/parsonsmatt/WifiWizard
-// from WifiWizard we should use: WifiWizard.getScanResults([options], listHandler, fail);
 
 function getRSSi(){
     // Call the print function to add text to the HTML div with the "nextAppoint" id in index.html
@@ -16,6 +8,7 @@ function getRSSi(){
         $("#nextAppoint").html(text);
     }
     
+<<<<<<< HEAD
     if (WifiWizard){
         // Check the results of the getScanResults
         var listHandler = function (list) {
@@ -54,23 +47,36 @@ function getRSSi(){
              * 
              */
         };
+=======
+    // Check the results of the getScanResults
+    var listHandler = function (list) {      
+         /*
+         * Here we need to select the five networks with the highest signal
+         * strength and send it to the server.
+         * 
+         */
         
-        // Error callback function
-        var fail = function (err) {
-            // Here the error is displayed in an alert
-            alert("error: "+err);
-            print("FAHRRAD ZURUCK BITTE!!");
-        };
+        var stringNetworks = new String();
+>>>>>>> origin/Tom
         
-        // call startScan
-        var options = {numLevels: false};
-        WifiWizard.startScan(win, fail);
-        WifiWizard.getScanResults(listHandler, fail, options);
+        for (var i = 0; i < list.length; i++) {
+            var network = "SSID: " + list[i].SSID + " RSSI: " + list[i].level + "\n";
+            stringNetworks += network;
+        }
+        
+        print(stringNetworks); 
 
-    } else {
-        // The module WifiWizard is not found
-        print("no WifiWizard"); 
-    }
+    };
+       
+    // Error callback function -- displays error message in alert
+    var fail = function (err) {
+        alert("error: "+err);
+        print("FAHRRAD ZURUCK BITTE!!");
+    };
+    
+    // Retrieves the RSSI values
+    WifiWizard.getScanResults({numLevels: false}, listHandler, fail);
+
 }
 
 window.onload = getRSSi;
