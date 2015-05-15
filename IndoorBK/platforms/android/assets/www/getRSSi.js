@@ -1,20 +1,13 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 //Here we should write the module that retrieves the RSSi values of the WiFi 
 //networks and sends it to the server. 
-
 // https://github.com/parsonsmatt/WifiWizard
-// from WifiWizard we should use: WifiWizard.getScanResults([options], listHandler, fail);
 
 function getRSSi(){
     // Call the print function to add text to the HTML div with the "nextAppoint" id in index.html
     var print = function(text) {
         $("#nextAppoint").html(text);
     }
+<<<<<<< HEAD
     
     if (WifiWizard){
         // Check the results of the getScanResults
@@ -49,23 +42,67 @@ function getRSSi(){
              * 
              */
         };
+=======
+
+    // Check the results of the getScanResults
+    var listHandler = function (list) {      
+
+        // If more than 5 access points are available, this if-else statement finds
+        // the 5 with strongest signal level and stores them in a new array
+        if (list.length > 5) {
+
+            // lists all rssi-levels and finds the fifth-largest value
+            var listLevels = Array(); 
+            for (var i = 0; i < list.length; i++) {
+                listLevels.push(list[i].level);
+            }
+            listLevels.sort(function(a,b){return b-a});
+            threshValue = listLevels[4];
+            alert(threshValue);
+            // finds all objects with rssi-levels above the fifth-largest value
+            // and stores them in a new array
+            var listObjects = Array();
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].level >= threshValue) {
+                    listObjects.push(list[i]);
+                }
+            }
+
+        } else {
+            var listObjects = list;
+        }
+      
+
+        // The following translates the objects to a string which can be printed
+        // into the html page        
+        var stringNetworks = new String();
+>>>>>>> origin/master
         
-        // Error callback function
-        var fail = function (err) {
-            // Here the error is displayed in an alert
-            alert("error: "+err);
-            print("FAHRRAD ZURUCK BITTE!!");
-        };
+        for (var i = 0; i < listObjects.length; i++) {
+            var network = "SSID: " + listObjects[i].SSID + " RSSI: " + listObjects[i].level + "\n";
+            stringNetworks += network;
+        }
         
+<<<<<<< HEAD
         // call startScan
         var options = {"numLevels": false};
         WifiWizard.startScan(win, fail);
         WifiWizard.getScanResults(options, listHandler, fail);
+=======
+        print(stringNetworks); 
 
-    } else {
-        // The module WifiWizard is not found
-        print("no WifiWizard"); 
-    }
+    };
+       
+    // Error callback function -- displays error message in alert
+    var fail = function (err) {
+        alert("error: "+err);
+        print("FAHRRAD ZURUCK BITTE!!");
+    };
+    
+    // Retrieves the RSSI values
+    WifiWizard.getScanResults({numLevels: false}, listHandler, fail);
+>>>>>>> origin/master
+
 }
 
 window.onload = getRSSi;

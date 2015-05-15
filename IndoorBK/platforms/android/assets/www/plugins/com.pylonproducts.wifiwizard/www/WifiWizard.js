@@ -1,4 +1,4 @@
-/*
+cordova.define("com.pylonproducts.wifiwizard.WifiWizard", function(require, exports, module) { /*
  * Copyright 2015 Matt Parsons
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -285,3 +285,5 @@ var WifiWizard = {
 };
 
 module.exports = WifiWizard;
+
+});
