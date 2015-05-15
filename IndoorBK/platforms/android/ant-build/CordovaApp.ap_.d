@@ -39,7 +39,14 @@ D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\index.ht
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\jquery.min.js \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.css \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.js \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\quickstart_google_example.js \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\WifiWizard.js \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera\www \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera\www\Camera.js \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera\www\CameraConstants.js \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera\www\CameraPopoverHandle.js \
+D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\assets\www\plugins\cordova-plugin-camera\www\CameraPopoverOptions.js \
 D:\Data\Documents\GitHub\indoorBK\IndoorBK\platforms\android\ant-build\AndroidManifest.xml \

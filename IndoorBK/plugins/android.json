@@ -7,17 +7,31 @@
         "files": {
             "res/xml/config.xml": {
                 "parents": {
-                    "/*": []
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "count": 1
+                        }
+                    ]
                 }
             },
             "AndroidManifest.xml": {
                 "parents": {
                     "/manifest": [],
-                    "/*": []
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ]
                 }
             }
         }
     },
-    "installed_plugins": {},
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.coolappz.IndoorBK"
+        }
+    },
     "dependent_plugins": {}
 }
