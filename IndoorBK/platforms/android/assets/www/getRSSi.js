@@ -39,13 +39,14 @@ function getRSSi(){
 
         // The following translates the objects to a string which can be printed
         // into the html page        
-        var stringNetworks = new String();
+        // var stringNetworks = new String();
         
-        for (var i = 0; i < listObjects.length; i++) {
-            var network = "SSID: " + listObjects[i].SSID + " RSSI: " + listObjects[i].level + "\n";
-            stringNetworks += network;
-        }
+        // for (var i = 0; i < listObjects.length; i++) {
+        //     var network = "SSID: " + listObjects[i].SSID + " RSSI: " + listObjects[i].level + "\n";
+        //     stringNetworks += network;
+        // }
         
+<<<<<<< HEAD
 <<<<<<< HEAD
         // call startScan
         var options = {"numLevels": false};
@@ -53,6 +54,27 @@ function getRSSi(){
         WifiWizard.getScanResults(options, listHandler, fail);
 =======
         print(stringNetworks); 
+=======
+        // print(stringNetworks); 
+
+
+        $.ajax({
+        url: 'http://145.97.237.141:8000',
+        data: 'Success! Data was received from server!',
+        type: 'POST',      
+        success: function (data) {
+            alert("jquery");
+          //  var ret = jQuery.parseJSON(data);
+            print(data.toString());
+            alert("success");
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + error.message);
+        }
+        });
+
+
+>>>>>>> origin/master
 
     };
        

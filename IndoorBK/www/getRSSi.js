@@ -54,6 +54,20 @@ function getRSSi(){
 =======
         print(stringNetworks); 
 
+        // The following is merely a test
+        // Sends an ajax call to the NodeJS server, and prints a message upon success
+        $.ajax({
+        url: 'http://145.97.237.141:8000',
+        data: 'Success! Data was received from server!',
+        type: 'POST',      
+        success: function (data) {
+            print(data.toString());
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + error.message);
+        }
+        });
+
     };
        
     // Error callback function -- displays error message in alert
