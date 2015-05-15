@@ -58,9 +58,9 @@ function getRSSi(){
         };
         
         // call startScan
-        var options = {numLevels: false};
+        var options = {"numLevels": false};
         WifiWizard.startScan(win, fail);
-        WifiWizard.getScanResults(listHandler, fail);
+        WifiWizard.getScanResults(options, listHandler, fail);
 
     } else {
         // The module WifiWizard is not found

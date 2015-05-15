@@ -20,28 +20,27 @@ function getRSSi(){
         // Check the results of the getScanResults
         var listHandler = function (list) {
             alert("listHandler");
+            
+             /*
+             * Here we need to select the five networks with the highest signal
+             * strength and send it to the server.
+             * 
+             */
+            
             var stringNetworks = new String();
             
             for (var i = 0; i < list.length; i++) {
-                network = "SSID: " + list[i].SSID + " RSSI: " + list[i].level + "\n";
+                var network = "SSID: " + list[i].SSID + " RSSI: " + list[i].level + "\n";
                 stringNetworks += network;
             }
             
             print(stringNetworks);
             
-            /*
-             * Here we need to select the five networks with the highest signal
-             * strength and send it to the server.
-             * 
-             */
+
         };
         
         // Check the results of startScan and call getScanResults
         var win = function(list) {
-<<<<<<< HEAD
-            alert("win");
-=======
->>>>>>> origin/master
             print(list);
             /*
              * Here we have a list of networks at our disposal. I don't know 
@@ -59,9 +58,9 @@ function getRSSi(){
         };
         
         // call startScan
-        var options = {numLevels: false};
+        var options = {"numLevels": false};
         WifiWizard.startScan(win, fail);
-        WifiWizard.getScanResults(listHandler, fail, options);
+        WifiWizard.getScanResults(options, listHandler, fail);
 
     } else {
         // The module WifiWizard is not found
