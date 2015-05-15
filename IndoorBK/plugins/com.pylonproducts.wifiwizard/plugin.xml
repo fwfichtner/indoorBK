@@ -12,10 +12,8 @@
     <license>Apache 2.0</license>
 	<repo>https://github.com/parsonsmatt/WifiWizard/</repo>
 
-	<asset src="www/WifiWizard.js" target="WifiWizard.js" />
-	
-    <js-module src="www/WifiWizard.js" name="WifiWizard">
-    	<clobbers target="wifiWizard"/>
+	<js-module src="www/WifiWizard.js" name="DynamicUpdate">
+        <clobbers target="WifiWizard" />
     </js-module>
 
     <platform name="android">
@@ -34,17 +32,5 @@
 
 	<source-file src="src/android/src/com/pylonproducts/wifiwizard/WifiWizard.java" target-dir="src/com/pylonproducts/wifiwizard" />
     </platform>
-
-	<platform name="ios">
-		<config-file target="config.xml" parent="/*">
-			<feature name="WifiWizard">
-				<param name="ios-package" value="NXWWifiWizard"/>
-			</feature>
-		</config-file>
-		
-		<header-file src="src/ios/NXWWifiWizard.h"/>
-		<source-file src="src/ios/NXWWifiWizard.m"/>
-		<framework src="SystemConfiguration.framework" />
-	</platform>
 
 </plugin>

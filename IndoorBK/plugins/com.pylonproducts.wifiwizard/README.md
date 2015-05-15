@@ -4,17 +4,11 @@ Version 0.2.8
 
 This Phonegap plugin enables WiFi management from within Phonegap applications.
 
-Currently, iOS only has limited functionality. Most functionality is only available on Android.
+Only Android is in development at this time. iOS is planned to be developed, with other platforms following.
 
 ### Installation
 
-#### Master
-
-Run `phonegap plugin install https://github.com/parsonsmatt/WifiWizard.git`. Please note that the plugin is in active development, and this will pull the most recent commits.
-
-#### Releases
-
-Run `cordova plugin add com.pylonproducts.wifiwizard`. This will get the latest release of the plugin.
+Run `phonegap plugin install https://github.com/parsonsmatt/WifiWizard.git`
 
 ### Usage from within Cordova/Phonegap:
 
@@ -50,24 +44,18 @@ Retrieves a list of the configured networks as an array of strings and passes th
 
 Start WiFi scanning. `success` is a function that is called when the scan is started. 
 
-#### `WifiWizard.getScanResults([options], listHandler, fail);` 
+#### `WifiWizard.getScanResults(listHandler, fail);` 
 
 Retrieves a list of the available networks as an array of objects and passes them to the function listHandler. The format of the array is:
 
     networks = [
-        {   "level": signal_level, // raw RSSI value
+        {   "level": signal_level, // can be from 0-5
             "SSID": ssid, // SSID as string, with escaped double quotes: "\"ssid name\""
             "BSSID": bssid // MAC address of WiFi router as string
         }
     ]
 
-An options object may be passed. Currently, the only supported option is `numLevels`, and it has the following behavior: 
-
-- if `(n == true || n < 2)`, `*.getScanResults({numLevels: n})` will return data as before, split in 5 levels;
-- if `(n > 1)`, `*.getScanResults({numLevels: n})` will calculate the signal level, split in n levels;
-- if `(n == false)`, `*.getScanResults({numLevels: n})` will use the raw signal level;
-
-#### `WifiWizard.getCurrentSSID(ssidHandler, fail);` 
+#### `WifiWizard.getConnectedSSID(ssidHandler, fail);` 
 
 Retrieves the current SSID and passes it to ssidHandler.
 
@@ -80,10 +68,6 @@ Retrieves the current wifi status and passes `true` or `false` to the handler.
 Set wifi status. `enabled` is a Boolean type, so to disable the Wifi, you'd execute `WifiWizard.setWifiEnabled(false);`
 
 ### Changelog:
-
-#### v0.2.9
-
-`isWifiEnabled` bug fixed. `level` in `getScanResults` object now refers to raw RSSI value. The function now accepts an options object, and by specifiying `{ numLevels: value }` you can get the old behavior.
 
 #### v0.2.8
 

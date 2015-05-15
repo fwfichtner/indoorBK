@@ -7,42 +7,6 @@ function getRSSi(){
     var print = function(text) {
         $("#nextAppoint").html(text);
     }
-<<<<<<< HEAD
-    
-    if (WifiWizard){
-        // Check the results of the getScanResults
-        var listHandler = function (list) {
-            alert("listHandler");
-            
-             /*
-             * Here we need to select the five networks with the highest signal
-             * strength and send it to the server.
-             * 
-             */
-            
-            var stringNetworks = new String();
-            
-            for (var i = 0; i < list.length; i++) {
-                var network = "SSID: " + list[i].SSID + " RSSI: " + list[i].level + "\n";
-                stringNetworks += network;
-            }
-            
-            print(stringNetworks);
-            
-
-        };
-        
-        // Check the results of startScan and call getScanResults
-        var win = function(list) {
-            print(list);
-            /*
-             * Here we have a list of networks at our disposal. I don't know 
-             * if it's necessary to call this function, but that's something we
-             * should figure out with some actual results
-             * 
-             */
-        };
-=======
 
     // Check the results of the getScanResults
     var listHandler = function (list) {      
@@ -58,7 +22,7 @@ function getRSSi(){
             }
             listLevels.sort(function(a,b){return b-a});
             threshValue = listLevels[4];
-            alert(threshValue);
+
             // finds all objects with rssi-levels above the fifth-largest value
             // and stores them in a new array
             var listObjects = Array();
@@ -76,7 +40,6 @@ function getRSSi(){
         // The following translates the objects to a string which can be printed
         // into the html page        
         var stringNetworks = new String();
->>>>>>> origin/master
         
         for (var i = 0; i < listObjects.length; i++) {
             var network = "SSID: " + listObjects[i].SSID + " RSSI: " + listObjects[i].level + "\n";

@@ -1,17 +1,3 @@
-/*
- * Copyright 2015 Matt Parsons
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.pylonproducts.wifiwizard;
 
 import org.apache.cordova.*;
@@ -89,7 +75,7 @@ public class WifiWizard extends CordovaPlugin {
             return this.startScan(callbackContext);
         }
         else if(action.equals(GET_SCAN_RESULTS)) {
-            return this.getScanResults(callbackContext, data);
+            return this.getScanResults(callbackContext);
         }
         else if(action.equals(DISCONNECT)) {
             return this.disconnect(callbackContext);
@@ -361,58 +347,17 @@ public class WifiWizard extends CordovaPlugin {
        *    of the scanned networks.
        *
        *    @param    callbackContext        A Cordova callback context
-       *    @param    data                   JSONArray with [0] == JSONObject
        *    @return    true
        */
-    private boolean getScanResults(CallbackContext callbackContext, JSONArray data) {
+    private boolean getScanResults(CallbackContext callbackContext) {
         List<ScanResult> scanResults = wifiManager.getScanResults();
 
         JSONArray returnList = new JSONArray();
 
-        Integer numLevels = null;
-
-        if (!data.isNull(0)) {
-            try {
-                JSONObject options = data.getJSONObject(0);
-
-                if (options.has("numLevels")) {
-                    Integer levels = options.optInt("numLevels");
-
-                    if (levels > 0) {
-                        numLevels = levels;
-                    } else if (options.optBoolean("numLevels", false)) {
-                        // use previous default for {numLevels: true}
-                        numLevels = 5;
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
         for (ScanResult scan : scanResults) {
-            /*
-             * @todo - breaking change, remove this notice when tidying new release and explain changes, e.g.:
-             *   0.y.z includes a breaking change to WifiWizard.getScanResults().
-             *   Earlier versions set scans' level attributes to a number derived from wifiManager.calculateSignalLevel.
-             *   This update returns scans' raw RSSI value as the level, per Android spec / APIs.
-             *   If your application depends on the previous behaviour, we have added an options object that will modify behaviour:
-             *   - if `(n == true || n < 2)`, `*.getScanResults({numLevels: n})` will return data as before, split in 5 levels;
-             *   - if `(n > 1)`, `*.getScanResults({numLevels: n})` will calculate the signal level, split in n levels;
-             *   - if `(n == false)`, `*.getScanResults({numLevels: n})` will use the raw signal level;
-             */
-
-            int level;
-
-            if (numLevels == null) {
-              level = scan.level;
-            } else {
-              level = wifiManager.calculateSignalLevel(scan.level, numLevels);
-            }
-
             JSONObject lvl = new JSONObject();
             try {
-                lvl.put("level", level);
+                lvl.put("level", wifiManager.calculateSignalLevel(scan.level, 5));
                 lvl.put("SSID", scan.SSID);
                 lvl.put("BSSID", scan.BSSID);
                 returnList.put(lvl);
