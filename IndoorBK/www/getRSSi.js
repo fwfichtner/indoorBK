@@ -35,24 +35,12 @@ function getRSSi(){
         } else {
             var listObjects = list;
         }
-      
 
-        // The following translates the objects to a string which can be printed
-        // into the html page        
-        var stringNetworks = new String();
-        
-        for (var i = 0; i < listObjects.length; i++) {
-            var network = "SSID: " + listObjects[i].SSID + " RSSI: " + listObjects[i].level + "\n";
-            stringNetworks += network;
-        }
-        
-        print(stringNetworks); 
-
-        // The following is merely a test
-        // Sends an ajax call to the NodeJS server, and prints a message upon success
+        // Sends the objects to the NodeJS server, and prints a message upon success
         $.ajax({
         url: 'http://145.97.237.141:8000',
-        data: 'Success! Data was received from server!',
+        data: JSON.stringify(listObjects),
+        contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
             print(data.toString());
