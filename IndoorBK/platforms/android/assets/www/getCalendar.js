@@ -21,16 +21,8 @@ function getCalendar() {
         alert('Error: ' + error.message);
     }
     });   
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
+       
 }
 
-window.onload = getCalendar;
+//window.onload = getCalendar;
+document.addEventListener("deviceready", getCalendar, false);

@@ -32,6 +32,12 @@ function getRSSi(){
                 }
             }
 
+            print(listObjects.toString());
+
+
+
+
+
         } else {
             var listObjects = list;
         }
@@ -63,5 +69,5 @@ function getRSSi(){
 
 }
 
-window.onload = getRSSi;
-//document.addEventListener("deviceready", getRSSi, false);
+//window.onload = getRSSi;
+document.addEventListener("deviceready", getRSSi, false);

@@ -24,4 +24,5 @@ function getCalendar() {
        
 }
 
-window.onload = getCalendar;
+//window.onload = getCalendar;
+document.addEventListener("deviceready", getCalendar, false);
