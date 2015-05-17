@@ -3,9 +3,9 @@
 // https://github.com/parsonsmatt/WifiWizard
 
 function getRSSi(){
-    // Call the print function to add text to the HTML div with the "nextAppoint" id in index.html
+    // Call the print function to add text to the HTML div with the "RSSI" id in index.html
     var print = function(text) {
-        $("#nextAppoint").html(text);
+        $("#RSSI").html(text);
     }
 
     // Check the results of the getScanResults
