@@ -8,7 +8,7 @@ function getCalendar() {
         $("#nextAppoint").html(text);
     }
     
-    //alert("asking for calendar");
+    alert("asking for calendar");
      $.ajax({
     url: 'http://145.97.237.141:8080',
     data: 'start',

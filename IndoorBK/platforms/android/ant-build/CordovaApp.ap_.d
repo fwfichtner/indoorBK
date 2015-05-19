@@ -32,7 +32,6 @@ D:\indoorBK\IndoorBK\platforms\android\assets\_where-is-www.txt \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\cordova.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\cordova_plugins.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\getCalendar.js \
-D:\indoorBK\IndoorBK\platforms\android\assets\www\getMap.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\getRSSi.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\index.html \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.min.js \

@@ -49,7 +49,6 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
-            // Should we return current location as well?
             print(data.toString());
         },
         error: function (xhr, status, error) {
