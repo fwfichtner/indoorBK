@@ -1,4 +1,4 @@
-module.exports = function (RSSI) {
+exports.getFingerprints = function (RSSI, callback) {
 //    //test dummy SSID WRONG!!!
 //    var RSSI = [
 //    { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
@@ -50,15 +50,12 @@ module.exports = function (RSSI) {
 
         query.on('end', function() { 
             loc_code = rows[0].loc;
-            console.log(loc_code); 
+            //console.log("FP: ",loc_code); 
+            callback(loc_code);
             client.end();
         });
         
-        if (loc_code == -1){
-            return "no fingerprinting result";
-        } else {
-            return loc_code; 
-        };
+        
     }
 
     get_loc(RSSI);

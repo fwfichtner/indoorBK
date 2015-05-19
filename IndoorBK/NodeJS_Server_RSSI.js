@@ -1,35 +1,56 @@
 //Lets require/import the HTTP module
 var http = require('http');
 var FP = require('./NodeJS_Fingerprinting.js');
+var calendar = require('./NodeJS_get_calendar.js');
 
 //Lets define a port we want to listen to
-const PORT=8000; 
-RSSI = [];
-position = [];
+const PORT=8000;
 
 //We need a function which handles requests and send response
 function handleRequest(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	
 	request.on("data", function(chunk) {
-        console.log(JSON.parse(chunk));
+        console.log("receiving data");
         RSSI = JSON.parse(chunk);
+        console.log(RSSI);
   	});
     
     request.on("end", function() {
+        console.log("All data received");
+        
         // Find the location of the user via WiFi Fingerprinting
-        position = FP(RSSI);
-        response.write("Success!");   
-        console.log(position);
         
-        // Get the next event from the calendar
+        FP.getFingerprints(RSSI, function (position, err) {
+            if (err) throw err;
+            
+            console.log("callback");
+            
+            response.write(position);
+            
+            // Get the next event from the calendar
+//            event = calendar.getCalendar();
+//            console.log(event);
+//            
+            // Geocode the event location 
 
-        // calculate the route 
 
-        // return the route
+            // calculate the route 
+
+
+            // return the route
+
+            // everything has completed successfully
+            console.log("End request");
+            response.end();
+
+            
+            
+            });
         
+       
         
-        response.end();
+    
   	});
 }
 
