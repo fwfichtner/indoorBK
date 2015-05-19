@@ -1,6 +1,6 @@
 //Lets require/import the HTTP module
 var http = require('http');
-var FP = require('./NodeJS_Fingerprinting.js');
+// var FP = require('./NodeJS_Fingerprinting.js');
 
 //Lets define a port we want to listen to
 const PORT=8000; 
@@ -12,22 +12,22 @@ function handleRequest(request, response){
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	
 	request.on("data", function(chunk) {
-        console.log(JSON.parse(chunk));
-        RSSI = JSON.parse(chunk);
+        //data = JSON.parse(chunk);
+        console.log("hoi");
   	});
     
     request.on("end", function() {
         // Find the location of the user via WiFi Fingerprinting
-        position = FP(RSSI);
-        response.write("Success!");   
-        console.log(position);
+        // position = FP(RSSI);
+        // response.write("Success!");   
+        // console.log(position);
         
         // Get the next event from the calendar
 
         // calculate the route 
 
         // return the route
-        
+        console.log("end");
         
         response.end();
   	});
