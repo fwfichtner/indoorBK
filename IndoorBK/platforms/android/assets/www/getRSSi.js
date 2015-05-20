@@ -5,9 +5,21 @@
 function getRSSi(){
     // Call the print function to add text to the HTML div with the "RSSI" id in index.html
     var print = function(text) {
-        $("#nextAppoint").html(text);
+        $("#RSSI").html(text);
     }
+    
+    $("#pageone").hide();
+    $("#Navigate").hide();
+    $("#ToStart").hide();
+    //$("#map").hide();
+    $("#nextAppoint").hide();
 
+    $("#Welcome").on("click", function(){
+        $("#pageone").show();
+        $("#Welcome").hide();
+    });
+    
+    
     // Check the results of the getScanResults
     var listHandler = function (list) {      
 
@@ -31,27 +43,23 @@ function getRSSi(){
                     listObjects.push(list[i]);
                 }
             }
+
+            print(listObjects.toString());
+
         } else {
             var listObjects = list;
         }
 
         // Sends the objects to the NodeJS server, and prints a message upon success
-        // var RSSI = [
-        //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
-        //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
-        //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
-        //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-42" }
-        //     ];
-
         $.ajax({
         url: 'http://145.97.237.141:8000',
         data: JSON.stringify(listObjects),
-//        data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
             print(data.toString());
+            $("#Loading").hide();
+            $("#Navigate").show();
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -59,7 +67,17 @@ function getRSSi(){
         });
 
     };
-       
+    
+    $("#Loading").on("click", function(){
+        alert("Just a second, almost ready!");
+    });
+    
+    $("#Navigate").on("click", function(){
+        alert("let's navigate!");
+        $("#nextAppoint").hide();
+        $("#map").show();
+    });
+    
     // Error callback function -- displays error message in alert
     var fail = function (err) {
         alert("error: "+err);
