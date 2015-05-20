@@ -11,8 +11,8 @@ function getRSSi(){
     $("#pageone").hide();
     $("#Navigate").hide();
     $("#ToStart").hide();
-    //$("#map").hide();
-    $("#nextAppoint").hide();
+    $("#map").hide();
+    //$("#nextAppoint").hide();
 
     $("#Welcome").on("click", function(){
         $("#pageone").show();
@@ -75,7 +75,6 @@ function getRSSi(){
     
     $("#Navigate").on("click", function(){
         alert("let's navigate!");
-        $("#RSSI").hide();
         $("#nextAppoint").hide();
         $("#map").show();
     });

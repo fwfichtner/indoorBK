@@ -75,7 +75,6 @@ function getRSSi(){
     
     $("#Navigate").on("click", function(){
         alert("let's navigate!");
-        $("#RSSI").hide();
         $("#nextAppoint").hide();
         $("#map").show();
     });
