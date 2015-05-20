@@ -2,15 +2,12 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
         <title>Indoor navigation app</title>
         
         <!-- Font --> 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-
-        <!-- Mapbox -->
-        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
-        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
 
         <!-- Jquery & Jquery mobile -->
         <link href="jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
@@ -23,11 +20,14 @@
         <!-- Cordova -->
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         
+         <!-- ArcGIS API -->
+        <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css"/>
+        <script src="http://js.arcgis.com/3.13/"></script>
+        
         <!-- Own JS + CSS --> 
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <script src="getRSSi.js" type="text/javascript"></script>
         <script src="getMap.js" type="text/javascript"></script>
-
     </head>
     <body>
         <div id="Welcome">
@@ -47,8 +47,8 @@
                     <!-- appointment comes here-->
                 </div>
                 
+                
                 <div id="map"></div>
-
                 
                 <!-- Go navigate button -->
                 <div class="button" id="Loading">Loading...</div>

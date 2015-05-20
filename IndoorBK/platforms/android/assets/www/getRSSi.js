@@ -5,7 +5,7 @@
 function getRSSi(){
     // Call the print function to add text to the HTML div with the "RSSI" id in index.html
     var print = function(text) {
-        $("#nextAppoint").html(text);
+        $("#RSSI").html(text);
     }
     
     $("#pageone").hide();
@@ -43,6 +43,7 @@ function getRSSi(){
                     listObjects.push(list[i]);
                 }
             }
+
             print(listObjects.toString());
 
         } else {
@@ -50,18 +51,9 @@ function getRSSi(){
         }
 
         // Sends the objects to the NodeJS server, and prints a message upon success
-        // var RSSI = [
-        //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
-        //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
-        //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
-        //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-42" }
-        //     ];
-
         $.ajax({
         url: 'http://145.97.237.141:8000',
         data: JSON.stringify(listObjects),
-//        data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
