@@ -11,8 +11,8 @@ function getRSSi(){
     $("#pageone").hide();
     $("#Navigate").hide();
     $("#ToStart").hide();
-    $("#map").hide();
-    //$("#nextAppoint").hide();
+    //$("#map").hide();
+    $("#nextAppoint").hide();
 
     $("#Welcome").on("click", function(){
         $("#pageone").show();
