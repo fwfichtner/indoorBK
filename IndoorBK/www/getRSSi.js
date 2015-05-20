@@ -44,6 +44,12 @@ function getRSSi(){
         //     { level : -56.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-42" }
         //     ];
 
+        // Converts the BSSID to capital letters
+        for (i = 0; i < RSSI.length; i++){
+        RSSI[i].BSSID = RSSI[i].BSSID.toUpperCase();
+        }
+
+        // Calls the server and sends the RSSI readings.
         $.ajax({
         url: 'http://145.97.237.141:8000',
         data: JSON.stringify(listObjects),
