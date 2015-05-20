@@ -60,8 +60,8 @@ function getRSSi(){
         //     ];
 
         // Converts the BSSID to capital letters
-        for (i = 0; i < RSSI.length; i++){
-        RSSI[i].BSSID = RSSI[i].BSSID.toUpperCase();
+        for (i = 0; i < listObjects.length; i++){
+        listObjects[i].BSSID = listObjects[i].BSSID.toUpperCase();
         }
 
         // Calls the server and sends the RSSI readings.
