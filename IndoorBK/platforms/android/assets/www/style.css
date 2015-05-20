@@ -8,6 +8,8 @@ and open the template in the editor.
 */
 
 html, body {
+    height: 100vh;
+    width: 100%;
     padding: 0;
     margin: 0;
 }
@@ -17,6 +19,13 @@ html, body {
     font-family: 'Open Sans', cursive;
     color: black;
 }
+
+#Welcome {
+    height: 100vh;
+    width: 100%;
+    background-color: #CF4858;
+}
+
 #head {
     background-color: #CF4858;
     border: none;
@@ -26,14 +35,25 @@ html, body {
     text-align: center;
 }
 
-#map, #nextAppoint {
+#map {
+    max-width: 100%;
+    min-width: 100%;
+    height: 70vh;
+    background-color: #E7E6E6;
+    padding: 0;
+    margin: 0;
+}
+
+#nextAppoint {
     height: 70vh;
     text-align: center;
     padding: 5px;
     background-color: #E7E6E6;
 }
 
-#button1, #button2 {
+.button {
+    margin-top: 1vh;
+    padding: 10px;
     background-color: #F4AC42;
     border: none;
     font-size:x-large;
