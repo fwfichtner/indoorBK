@@ -4,12 +4,27 @@
  * and open the template in the editor.
  */
 
-var map;
-
-require(["esri/map", "dojo/domReady!"], function(Map) {
-    map = new Map("map", {
-    basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-    center: [-122.45, 37.75], // longitude, latitude
-    oom: 13
+ var map;
+  require([
+    "esri/map", 
+    "esri/layers/KMLLayer",
+    "dojo/domReady!"
+  ], function(
+    Map, 
+    KMLLayer
+  ) {
+    map = new Map("map", { 
+      basemap: "satellite",
+      center: [4.370802, 52.005523],
+      zoom: 17
     });
-});
+    map.on("load", function() {
+        map.disableMapNavigation();
+        map.disablePan();
+        map.hideZoomSlider();
+    });
+
+    var kmlUrl = "https://drive.google.com/uc?export=download&id=0B4QridFVh8uCR29fNXAyNGRXcDg";
+    var kml = new KMLLayer(kmlUrl); 
+    map.addLayer(kml);
+  });

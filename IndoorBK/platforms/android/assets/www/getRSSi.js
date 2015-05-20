@@ -7,7 +7,19 @@ function getRSSi(){
     var print = function(text) {
         $("#RSSI").html(text);
     }
+    
+    $("#pageone").hide();
+    $("#Navigate").hide();
+    $("#ToStart").hide();
+    //$("#map").hide();
+    $("#nextAppoint").hide();
 
+    $("#Welcome").on("click", function(){
+        $("#pageone").show();
+        $("#Welcome").hide();
+    });
+    
+    
     // Check the results of the getScanResults
     var listHandler = function (list) {      
 
@@ -34,10 +46,6 @@ function getRSSi(){
 
             print(listObjects.toString());
 
-
-
-
-
         } else {
             var listObjects = list;
         }
@@ -51,6 +59,8 @@ function getRSSi(){
         success: function (data) {
             // Should we return current location as well?
             print(data.toString());
+            $("#Loading").hide();
+            $("#Navigate").show();
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -58,7 +68,18 @@ function getRSSi(){
         });
 
     };
-       
+    
+    $("#Loading").on("click", function(){
+        alert("Just a second, almost ready!");
+    });
+    
+    $("#Navigate").on("click", function(){
+        alert("let's navigate!");
+        $("#RSSI").hide();
+        $("#nextAppoint").hide();
+        $("#map").show();
+    });
+    
     // Error callback function -- displays error message in alert
     var fail = function (err) {
         alert("error: "+err);
