@@ -49,7 +49,12 @@ exports.getFingerprints = function (RSSI, callback) {
         });
 
         query.on('end', function() { 
-            loc_code = rows[0].loc;
+            if (rows.length == 0) {
+                loc_code = "You are not in BK!";
+            } else {
+                loc_code = rows[0].loc;
+            }
+            
             //console.log("FP: ",loc_code); 
             callback(loc_code);
             client.end();
