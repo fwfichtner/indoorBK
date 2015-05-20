@@ -2,6 +2,7 @@
 var http = require('http');
 var FP = require('./NodeJS_Fingerprinting.js');
 var calendar = require('./NodeJS_get_calendar.js');
+var fs = require('fs');
 
 //Lets define a port we want to listen to
 const PORT=8000;
@@ -19,18 +20,18 @@ function handleRequest(request, response){
     request.on("end", function() {
         console.log("All data received");
         
-        // Find the location of the user via WiFi Fingerprinting
-        
+        // Find the location of the user via WiFi Fingerprinting   
         FP.getFingerprints(RSSI, function (position, err) {
             if (err) throw err;
-            
-            console.log("callback");
-            
-            response.write(position);
+//            response.write("You are located at node: " + position);
             
             // Get the next event from the calendar
-//            event = calendar.getCalendar();
-//            console.log(event);
+            calendar.getCalendar();
+            var nextEvent = fs.readFileSync('./test.txt').toString();
+            console.log(nextEvent);
+
+            reply = "You are located at node: " + position + "|" + nextEvent;
+            response.write(reply);
 //            
             // Geocode the event location 
 
@@ -43,9 +44,8 @@ function handleRequest(request, response){
             // everything has completed successfully
             console.log("End request");
             response.end();
-
-            });
-    
+            
+            });   
   	});
 }
 
@@ -57,4 +57,3 @@ server.listen(PORT, function(){
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening on: http://localhost:%s", PORT);
 });
-
