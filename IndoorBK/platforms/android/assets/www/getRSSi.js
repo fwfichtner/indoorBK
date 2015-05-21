@@ -5,14 +5,14 @@
 function getRSSi(){
     // Call the print function to add text to the HTML div with the "RSSI" id in index.html
     var print = function(text) {
-        $("#RSSI").html(text);
+        $("#nextAppoint").html(text);
     }
     
     $("#pageone").hide();
     $("#Navigate").hide();
     $("#ToStart").hide();
-    //$("#map").hide();
-    $("#nextAppoint").hide();
+    $("#map").hide();
+    //$("#nextAppoint").hide();
 
     $("#Welcome").on("click", function(){
         $("#pageone").show();
