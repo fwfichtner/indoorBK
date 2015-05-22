@@ -6,7 +6,8 @@ function getRSSi(){
     // Call the print function to add text to the HTML div with the "RSSI" id in index.html
     var print = function(text) {
         $("#RSSI").html(text);
-    }
+    };
+    
     
     $("#pageone").hide();
     $("#Navigate").hide();
@@ -57,9 +58,31 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
+            // Dummy GeoJSON 
+            var GeoJSON = [
+                    {
+                      "type": "Feature",
+                      "geometry": {
+                        "type": "LineString",
+                        "coordinates": [
+                          [4.370451,52.005726],
+                          [4.371193,52.005348]
+                        ]
+                      },
+                      "properties": {
+                        "stroke": "#fc4353",
+                        "stroke-width": 5
+                      }
+                    }
+                  ];
+            // Add GeoJSON to map
+            var route = L.geoJson(GeoJSON, { style: L.mapbox.simplestyle.style });
+            route.addTo(map).bringToFront();
+            
             print(data.toString());
             $("#Loading").hide();
             $("#Navigate").show();
+            route = data;
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -73,7 +96,7 @@ function getRSSi(){
     });
     
     $("#Navigate").on("click", function(){
-        alert("let's navigate!");
+        
         $("#nextAppoint").hide();
         $("#map").show();
     });
@@ -81,7 +104,7 @@ function getRSSi(){
     // Error callback function -- displays error message in alert
     var fail = function (err) {
         alert("error: "+err);
-        print("FAHRRAD ZURUCK BITTE!!");
+        print("Ajax fail");
     };
     
     // Retrieves the RSSI values

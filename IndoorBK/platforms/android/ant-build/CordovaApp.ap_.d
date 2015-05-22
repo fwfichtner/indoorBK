@@ -38,6 +38,7 @@ D:\indoorBK\IndoorBK\platforms\android\assets\www\index.html \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.min.js \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.css \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\jquery.mobile-1.4.5.min.js \
+D:\indoorBK\IndoorBK\platforms\android\assets\www\marker.png \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\plugins \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\style.css \
 D:\indoorBK\IndoorBK\platforms\android\assets\www\WifiWizard.js \
