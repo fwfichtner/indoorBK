@@ -73,9 +73,13 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
+            
+
+            
             print(data.toString());
             $("#Loading").hide();
             $("#Navigate").show();
+            route = data;
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -89,7 +93,7 @@ function getRSSi(){
     });
     
     $("#Navigate").on("click", function(){
-        alert("let's navigate!");
+        
         $("#nextAppoint").hide();
         $("#map").show();
     });
@@ -97,7 +101,7 @@ function getRSSi(){
     // Error callback function -- displays error message in alert
     var fail = function (err) {
         alert("error: "+err);
-        print("FAHRRAD ZURUCK BITTE!!");
+        print("Ajax fail");
     };
     
     // Retrieves the RSSI values
