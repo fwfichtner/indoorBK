@@ -37,9 +37,16 @@ var map;
         ], function(Map, arcgisUtils, KMLLayer){
             esri.arcgis.utils.arcgisUrl = esri.arcgis.utils.arcgisUrl.replace("file:", "http:");
             arcgisUtils.createMap("8fe4439f1f8541a2964500175814eb86", "map").then(function (response) {
+                
                 map = response.map; 
+                map.disableMapNavigation();
+                map.disablePan();
+                map.hideZoomSlider();
+                
+//                var kmlUrl = "https://drive.google.com/uc?export=download&id=0B4QridFVh8uCR29fNXAyNGRXcDg";
+//                var kml = new KMLLayer(kmlUrl); 
+//                map.addLayer(kml);
+//                
+          
             });
-//          var kmlUrl = "https://drive.google.com/uc?export=download&id=0B4QridFVh8uCR29fNXAyNGRXcDg";
-//          var kml = new KMLLayer(kmlUrl); 
-//          map.addLayer(kml);
   });
