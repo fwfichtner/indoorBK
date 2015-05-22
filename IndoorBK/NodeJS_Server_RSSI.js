@@ -26,10 +26,11 @@ function handleRequest(request, response){
 //            response.write("You are located at node: " + position);
             
             // Get the next event from the calendar
-            calendar.getCalendar();
-            var nextEvent = fs.readFileSync('./test.txt').toString();
-            console.log(nextEvent);
-
+//            calendar.getCalendar();
+//            var nextEvent = fs.readFileSync('./test.txt').toString();
+//            console.log(nextEvent);
+            
+            var nextevent = "App building course!!";
             reply = "You are located at node: " + position + "|" + nextEvent;
             response.write(reply);
 //            
