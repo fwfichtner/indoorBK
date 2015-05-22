@@ -7,12 +7,26 @@ function getRSSi(){
     var print = function(text) {
         $("#nextAppoint").html(text);
     }
+
+    function HoverButton(ID) {
+        $("#"+ID).hover(function(){
+            // If the mouse hovers over the buttons some CSS changes can be made
+            // Pick whatever colours of styling you want!
+            $("#"+ID).css("background-color", "#42A5F5");
+            },function(){
+            $("#"+ID).css("background-color", "#64B5F6");
+         });    
+    }
+    HoverButton("Loading");
+    HoverButton("Navigate");
+    HoverButton("ToStart");
+
     
     $("#pageone").hide();
     $("#Navigate").hide();
     $("#ToStart").hide();
-    $("#map").hide();
-    //$("#nextAppoint").hide();
+    //$("#map").hide();
+    $("#nextAppoint").hide();
 
     $("#Welcome").on("click", function(){
         $("#pageone").show();
@@ -73,8 +87,26 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
-            
-
+            // Dummy GeoJSON 
+            var GeoJSON = [
+                    {
+                      "type": "Feature",
+                      "geometry": {
+                        "type": "LineString",
+                        "coordinates": [
+                          [4.370451,52.005726],
+                          [4.371193,52.005348]
+                        ]
+                      },
+                      "properties": {
+                        "stroke": "#fc4353",
+                        "stroke-width": 5
+                      }
+                    }
+                  ];
+            // Add GeoJSON to map
+            var route = L.geoJson(GeoJSON, { style: L.mapbox.simplestyle.style });
+            route.addTo(map).bringToFront();
             
             print(data.toString());
             $("#Loading").hide();

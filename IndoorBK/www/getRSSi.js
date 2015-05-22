@@ -8,6 +8,19 @@ function getRSSi(){
         $("#nextAppoint").html(text);
     }
 
+    function HoverButton(ID) {
+        $("#"+ID).hover(function(){
+            // If the mouse hovers over the buttons some CSS changes can be made
+            // Pick whatever colours of styling you want!
+            $("#"+ID).css("background-color", "#42A5F5");
+            },function(){
+            $("#"+ID).css("background-color", "#64B5F6");
+         });    
+    }
+    HoverButton("Loading");
+    HoverButton("Navigate");
+    HoverButton("ToStart");
+
     
     $("#pageone").hide();
     $("#Navigate").hide();
