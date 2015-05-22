@@ -30,7 +30,7 @@ function handleRequest(request, response){
 //            var nextEvent = fs.readFileSync('./test.txt').toString();
 //            console.log(nextEvent);
             
-            var nextevent = "App building course!!";
+            var nextEvent = "App building course!!";
             reply = "You are located at node: " + position + "|" + nextEvent;
             response.write(reply);
 //            
