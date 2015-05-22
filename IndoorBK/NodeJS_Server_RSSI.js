@@ -3,6 +3,8 @@ var http = require('http');
 var FP = require('./NodeJS_Fingerprinting.js');
 var calendar = require('./NodeJS_get_calendar.js');
 var fs = require('fs');
+var pg = require('pg');
+
 
 //Lets define a port we want to listen to
 const PORT=8000;
@@ -31,7 +33,18 @@ function handleRequest(request, response){
             var nextEvent = fs.readFileSync('./test.txt').toString();
             console.log(nextEvent);
 
-            reply = "You are located at node: " + position + "|" + nextEvent;
+            var destination = nextEvent.substr(nextEvent.length - 7);
+
+            if (destination.substr(0,2) == "BK") {
+                var conString = "postgres://postgres:Geomatics2015!@localhost:5432/postgres";
+                var client = new pg.Client(conString);
+                client.connect();
+                var query = client.query(main_query);
+            } else {
+                destination = "Your destination is not in BK!";
+            }
+
+            var reply = "You are located at node: " + position + "| Your next event is: " + nextEvent + "Your destination is: " + destination;
             response.write(reply);
 //            
             // Geocode the event location 
