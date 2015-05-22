@@ -3,9 +3,9 @@
 // https://github.com/parsonsmatt/WifiWizard
 
 function getRSSi(){
-    // Call the print function to add text to the HTML div with the "RSSI" id in index.html
+    // Call the print function to add text to the HTML div with the "nextAppoint" id in index.html
     var print = function(text) {
-        $("#RSSI").html(text);
+        $("#nextAppoint").html(text);
     }
     
     $("#pageone").hide();
@@ -49,6 +49,8 @@ function getRSSi(){
         } else {
             var listObjects = list;
         }
+      
+
 
         // Sends the objects to the NodeJS server, and prints a message upon success
         // var RSSI = [
@@ -64,11 +66,15 @@ function getRSSi(){
         listObjects[i].BSSID = listObjects[i].BSSID.toUpperCase();
         }
 
-        // Calls the server and sends the RSSI readings.
+
+        // call startScan
+        var options = {"numLevels": false};
+        WifiWizard.startScan(win, fail);
+        WifiWizard.getScanResults(options, listHandler, fail);
+
         $.ajax({
         url: 'http://145.97.237.141:8000',
-        data: JSON.stringify(listObjects),
-        contentType: 'application/json',
+        data: 'Success! Data was received from server!',
         type: 'POST',      
         success: function (data) {
             print(data.toString());

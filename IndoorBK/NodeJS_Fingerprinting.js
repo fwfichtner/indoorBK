@@ -20,7 +20,7 @@ exports.getFingerprints = function (RSSI, callback) {
 
         //build query
         var part1 = "select distinct(tweede.loc), sum(tellen) as groeperen from ("
-        var part2 = "select loc, abs(signalstrength + "+arr_strength[0]+") as tellen from avg_fp where macadress = '"+arr_mac[0]+"' union all select loc, abs(signalstrength + "+arr_strength[1]+") as tellen from avg_fp where macadress = '"+arr_mac[1]+"' union all select loc, abs(signalstrength + "+arr_strength[2]+") as tellen from avg_fp where macadress = '"+arr_mac[2]+"' union all select loc, abs(signalstrength + "+arr_strength[3]+") as tellen from avg_fp where macadress = '"+arr_mac[3]+"' union all select loc, abs(signalstrength + "+arr_strength[4]+") as tellen from avg_fp where macadress = '"+arr_mac[4]+" '"
+        var part2 = "select loc, abs(signalstrength - "+arr_strength[0]+") as tellen from avg_fp where macadress = '"+arr_mac[0]+"' union all select loc, abs(signalstrength - "+arr_strength[1]+") as tellen from avg_fp where macadress = '"+arr_mac[1]+"' union all select loc, abs(signalstrength - "+arr_strength[2]+") as tellen from avg_fp where macadress = '"+arr_mac[2]+"' union all select loc, abs(signalstrength - "+arr_strength[3]+") as tellen from avg_fp where macadress = '"+arr_mac[3]+"' union all select loc, abs(signalstrength - "+arr_strength[4]+") as tellen from avg_fp where macadress = '"+arr_mac[4]+" '"
         var part3 = ") AS tweede GROUP BY tweede.loc ORDER BY groeperen LIMIT 1;"
         var main_query = part1 + part2 + part3
         //console.log(main_query)
