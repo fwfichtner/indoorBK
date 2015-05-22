@@ -44,13 +44,11 @@ function getRSSi(){
                 }
             }
 
-            print(listObjects.toString());
-
         } else {
             var listObjects = list;
         }
 
-        // Sends the objects to the NodeJS server, and prints a message upon success
+        //Sends the objects to the NodeJS server, and prints a message upon success
         // var RSSI = [
         //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
         //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
@@ -62,12 +60,16 @@ function getRSSi(){
         // Converts the BSSID to capital letters
         for (i = 0; i < listObjects.length; i++){
         listObjects[i].BSSID = listObjects[i].BSSID.toUpperCase();
+        listObjects[i].BSSID = listObjects[i].BSSID.replace(":","-");
         }
+
+        print(JSON.stringify(listObjects));
 
         // Calls the server and sends the RSSI readings.
         $.ajax({
         url: 'http://145.97.237.141:8000',
         data: JSON.stringify(listObjects),
+        // data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
