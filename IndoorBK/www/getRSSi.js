@@ -54,13 +54,13 @@ function getRSSi(){
         //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
         //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
         //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-42" }
+        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
         //     ];
 
         // Converts the BSSID to capital letters
         for (i = 0; i < listObjects.length; i++){
         listObjects[i].BSSID = listObjects[i].BSSID.toUpperCase();
-        listObjects[i].BSSID = listObjects[i].BSSID.replace(":","-");
+        listObjects[i].BSSID = listObjects[i].BSSID.replace(/:/g,"-");
         }
 
         print(JSON.stringify(listObjects));
