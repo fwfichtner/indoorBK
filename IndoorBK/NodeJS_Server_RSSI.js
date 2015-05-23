@@ -31,21 +31,40 @@ function handleRequest(request, response){
 
             calendar.getCalendar();
             var nextEvent = fs.readFileSync('./test.txt').toString();
-            console.log(nextEvent);
+            nextEvent = nextEvent.split("#");
 
-            var destination = nextEvent.substr(nextEvent.length - 7);
+            var nextTime = nextEvent[0].substr(11,19);
+            nextEvent[0] = nextTime;
+            var nextLoc = nextEvent[2];
 
-            if (destination.substr(0,2) == "BK") {
+            if (nextLoc.substr(0,2) == "BK") {
                 var conString = "postgres://postgres:Geomatics2015!@localhost:5432/postgres";
                 var client = new pg.Client(conString);
                 client.connect();
-                var query = client.query(main_query);
+                var query_string = "SELECT node FROM mappings WHERE room = '" + nextLoc + "';";  
+                var query = client.query(query_string);
+                var rows = [];
+                
+                query.on('row', function(row) {
+                    rows.push(row);
+                    var node = row.node;
+                });
+
+                query.on('end', function() { 
+                    if (rows.length == 0) {
+                        destination = "Your destination is not in the database!";
+                    } else {
+                        destination = "placeholder";
+                    }
+                });
+
             } else {
                 destination = "Your destination is not in BK!";
             }
 
-            var reply = "You are located at node: " + position + "| Your next event is: " + nextEvent + "Your destination is: " + destination;
-            response.write(reply);
+ //           var reply = "You are located at node: " + position + "| Your next event is: " + nextEvent + "Your destination is: " + destination;
+            var reply = nextEvent;
+            response.write(JSON.stringify(reply));
 //            
             // Geocode the event location 
 

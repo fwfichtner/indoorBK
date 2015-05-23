@@ -10,12 +10,13 @@
 // list[1] = Event name
 // list[2] = Location name
 var printAppoint = function(list) {
+    alert(list[1]);
     $("#nextAppoint").html(
             "<div>"+
                 "<p><b>Next event:</b> </br>"+ list[1].toString() +"</p>"+
                 "<p><b>Location:</b> </br>"+ list[2].toString() +"</p>"+
-                "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
-                *2.77778e-7).toString() +" hour(s)</b></p>"
+ //               "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
+//                *2.77778e-7).toString() +" hour(s)</b></p>"
             +"</div>"
             );
 };
@@ -73,11 +74,11 @@ function getRSSi(){
     // Show and hide specific divs
     $("#pageone").hide();
     $("#Welcome").show();
-    //$("#Navigate").hide();
+    $("#Navigate").hide();
     $("#ToStart").hide();
     $("#map").hide();
     //$("#nextAppoint").hide();
-    $("#Loading").hide();
+    //$("#Loading").hide();
     
     // Add the onHover effect to clickable buttons
     HoverButton("Navigate");
@@ -104,15 +105,15 @@ function getRSSi(){
     $("#ToStart").on("click", function(){
         // Start over again
         $("#nextAppoint").show();
-        //$("#Loading").show();
-        $("#Navigate").show();
+        $("#Loading").show();
+        //$("#Navigate").show();
         getRSSi();
 
     });  
 
 
     // test the printAppoint function with some dummy data
-    printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
+ //   printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
     
     // Dummy GeoJSON 
     var DummyGeoJSON1 = [
@@ -205,9 +206,9 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
-            alert("Test! I think you're at node ",data[0]);
-
-            printAppoint(data.slice(1,4));
+ //           alert("Test! I think you're at node ",data[0]);
+            data = JSON.parse(data);
+            printAppoint(data);
             $("#Loading").hide();
             $("#Navigate").show();
             addGeoJSON(data.slice(4));
