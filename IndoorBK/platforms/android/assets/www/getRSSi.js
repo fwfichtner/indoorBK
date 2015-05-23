@@ -2,38 +2,155 @@
 //networks and sends it to the server. 
 // https://github.com/parsonsmatt/WifiWizard
 
-function getRSSi(){
-    // Call the print function to add text to the HTML div with the "RSSI" id in index.html
-    var print = function(text) {
-        $("#nextAppoint").html(text);
-    }
+// First we define all of the general functions
 
-    function HoverButton(ID) {
-        $("#"+ID).hover(function(){
-            // If the mouse hovers over the buttons some CSS changes can be made
-            // Pick whatever colours of styling you want!
-            $("#"+ID).css("background-color", "#42A5F5");
-            },function(){
-            $("#"+ID).css("background-color", "#64B5F6");
-         });    
-    }
-    HoverButton("Loading");
+// This function prints the appointment to the screen with the proper HTML format.
+// It takes a list (array) as input:
+// list[0] = date object
+// list[1] = Event name
+// list[2] = Location name
+var printAppoint = function(list) {
+    $("#nextAppoint").html(
+            "<div>"+
+                "<p><b>Next event:</b> </br>"+ list[1].toString() +"</p>"+
+                "<p><b>Location:</b> </br>"+ list[2].toString() +"</p>"+
+                "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
+                *2.77778e-7).toString() +" hour(s)</b></p>"
+            +"</div>"
+            );
+};
+
+// Call the print function to add text to the HTML div with the "RSSI" id in index.html
+var print = function(text) {
+    $("#nextAppoint").html(text);
+};
+
+
+// This functino adds GeoJSON to map
+var addGeoJSON = function(list){
+    // it should remove the previous layers here first, but it doesn't work yet
+//    map.eachLayer(function(layer){
+//        if (layer._leaflet_id === "1"){
+//            map.removeLayer(layer);
+//	};
+//    });
+    
+    // Make the new layer from the given GeoJSON
+    var route = new L.GeoJSON();
+//    route._leaflet_id = "1";
+//    console.log(route._leaflet_id);
+    list.forEach(function(line){        
+        route.addData(line, { style: L.mapbox.simplestyle.style });
+    });
+    route.setStyle({color:'red'});
+    route.addTo(map);
+    map.fitBounds(route.getBounds());
+    route.bringToFront();
+};
+
+// This function creates a hover-over effect for buttons 
+function HoverButton(ID) {
+    $("#"+ID).hover(function(){
+        // If the mouse hovers over the buttons some CSS changes can be made
+        // Pick whatever colours of styling you want!
+        $("#"+ID).css("background-color", "#42A5F5");
+        },function(){
+        $("#"+ID).css("background-color", "#64B5F6");
+     });    
+}
+  
+
+// Error callback function -- displays error message in alert
+var fail = function (err) {
+    alert("error: "+err);
+    //print("Ajax fail");
+};
+
+
+// This is the main function that calls the server as well
+function getRSSi(){
+
+    // Show and hide specific divs
+    $("#pageone").hide();
+    $("#Welcome").show();
+    //$("#Navigate").hide();
+    $("#ToStart").hide();
+    $("#map").hide();
+    //$("#nextAppoint").hide();
+    $("#Loading").hide();
+    
+    // Add the onHover effect to clickable buttons
     HoverButton("Navigate");
     HoverButton("ToStart");
 
     
-    $("#pageone").hide();
-    $("#Navigate").hide();
-    $("#ToStart").hide();
-    //$("#map").hide();
-    $("#nextAppoint").hide();
-
+    // When welcome page is clicked it is replaced by the main page
     $("#Welcome").on("click", function(){
         $("#pageone").show();
         $("#Welcome").hide();
     });
+
+    $("#Loading").on("click", function(){
+        alert("Just a second, almost ready!");
+    });
+
+    $("#Navigate").on("click", function(){
+        $("#Navigate").hide();
+        $("#ToStart").show();
+        $("#nextAppoint").hide();
+        $("#map").show();
+    });
+
+    $("#ToStart").on("click", function(){
+        // Start over again
+        $("#nextAppoint").show();
+        //$("#Loading").show();
+        $("#Navigate").show();
+        getRSSi();
+
+    });  
+
+
+    // test the printAppoint function with some dummy data
+    printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
     
-    
+    // Dummy GeoJSON 
+    var DummyGeoJSON1 = [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [4.370451,52.005726],
+                  [4.371193,52.005348]
+                ]
+              },
+              "properties": {
+                "stroke": "#fc4353",
+                "stroke-width": 5
+              }
+            }
+          ];
+    var DummyGeoJSON2 = [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [4.370451,52.005726],
+                  [4.370137,52.005410]
+                ]
+              },
+              "properties": {
+                "stroke": "#fc4353",
+                "stroke-width": 5
+              }
+            }
+          ];
+    // test the addGeoJSON function with dummy data
+    addGeoJSON([DummyGeoJSON1,DummyGeoJSON2]);
+   
+
     // Check the results of the getScanResults
     var listHandler = function (list) {      
 
@@ -77,8 +194,9 @@ function getRSSi(){
         listObjects[i].BSSID = listObjects[i].BSSID.replace(/:/g,"-");
         }
 
-        print(JSON.stringify(listObjects));
+        //print(JSON.stringify(listObjects));
 
+        
         // Calls the server and sends the RSSI readings.
         $.ajax({
         url: 'http://145.97.237.141:8000',
@@ -87,59 +205,23 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
-            // Dummy GeoJSON 
-            var GeoJSON = [
-                    {
-                      "type": "Feature",
-                      "geometry": {
-                        "type": "LineString",
-                        "coordinates": [
-                          [4.370451,52.005726],
-                          [4.371193,52.005348]
-                        ]
-                      },
-                      "properties": {
-                        "stroke": "#fc4353",
-                        "stroke-width": 5
-                      }
-                    }
-                  ];
-            // Add GeoJSON to map
-            var route = L.geoJson(GeoJSON, { style: L.mapbox.simplestyle.style });
-            route.addTo(map).bringToFront();
-            
-            print(data.toString());
+            alert("Test! I think you're at node ",data[0]);
+
+            printAppoint(data.slice(1,4));
             $("#Loading").hide();
             $("#Navigate").show();
-            route = data;
+            addGeoJSON(data.slice(4));
         },
-        error: function (xhr, status, error) {
-            alert('Error: ' + error.message);
-        }
+            error: function (xhr, status, error) {
+                alert('Error: ' + error.message);
+            }
         });
-
-    };
-    
-    $("#Loading").on("click", function(){
-        alert("Just a second, almost ready!");
-    });
-    
-    $("#Navigate").on("click", function(){
-        
-        $("#nextAppoint").hide();
-        $("#map").show();
-    });
-    
-    // Error callback function -- displays error message in alert
-    var fail = function (err) {
-        alert("error: "+err);
-        print("Ajax fail");
     };
     
     // Retrieves the RSSI values
     WifiWizard.getScanResults({numLevels: false}, listHandler, fail);
 
-}
+};
 
 //window.onload = getRSSi;
 document.addEventListener("deviceready", getRSSi, false);

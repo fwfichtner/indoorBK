@@ -17,11 +17,6 @@
         <!-- Cordova -->
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         
-         <!-- ArcGIS API -->
-        <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css"/>
-        <script>var dojoConfig = { parseOnLoad:true };</script>
-        <script src="http://js.arcgis.com/3.13/"></script>
-        
         <!-- Leaflet -->
         <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
@@ -56,16 +51,17 @@
                 <div id="map"></div>
                 <script>
                     L.mapbox.accessToken = 'pk.eyJ1IjoiaXZvMTEyMzUiLCJhIjoieV82bFVfNCJ9.G8mrfJOA07edDDj6Bep2bQ';
-                    var map = L.mapbox.map('map', 'ivo11235.lc57dmfb' );
+                    L.CRS.EPSG3857;
+                    var map = L.mapbox.map('map', 'ivo11235.lc57dmfb');
                 </script>
 
                 <script src="getMap.js" type="text/javascript"></script>
                 
                 
                 <!-- Go navigate button -->
-                <div class="button" id="Loading">Loading...</div>
-                <div class="button" id="Navigate">Bring me there!</div>
-                <div class="button" id="ToStart">Go to Start</div>
+                <div class="button" id="Loading"><p>Loading...</p></div>
+                <div class="button" id="Navigate"><p>Bring me there!</p></div>
+                <div class="button" id="ToStart"><p>Go to Start</p></div>
             </div>
         </div>
         

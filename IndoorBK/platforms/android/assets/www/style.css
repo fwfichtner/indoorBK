@@ -12,7 +12,6 @@ html, body {
     width: 100%;
     padding: 0;
     margin: 0;
-    color: white;
 }
 
 .page {
@@ -24,15 +23,17 @@ html, body {
 }
 
 #Welcome {
+    font-family: 'Roboto';
     margin: 0;
     padding: 10px;
     height: 100%;
     width: 100%;
     background-color: #64B5F6;
-    color: white;
+    color: #FAFAFA;
 }
 
 #head {
+    color: #FAFAFA;
     background-color: #3F51B5;
     border: none;
     font-size:250%;
@@ -60,7 +61,7 @@ html, body {
     position: fixed;
     top: 10vh;
     left: 0px;
-    height: 60vh;
+    height: 70vh;
     min-width: 100%;
     text-align: center;
     padding: 5px;
@@ -70,15 +71,22 @@ html, body {
 .button {
     position: fixed;
     top: 85vh;
-    height: 5vh;
+    height: 10vh;
     width: 50%;
-    padding: 10px;
     background-color: #64B5F6;
     border: none;
-    font-size:150%;
     text-align: center;
-    color: black;
     padding-top: 1vh;
     padding-bottom: 1vh;
+}
+
+#nextAppoint p {
+   font-size:200%;   
+}
+
+.button p {
+    font-size:150%;
+    color: black;
+    line-height: 0.2;
 }
 
