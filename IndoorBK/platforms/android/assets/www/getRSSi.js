@@ -27,46 +27,36 @@ var print = function(text) {
 };
 
 
-// This functino adds GeoJSON to map
+// This function adds GeoJSON to map
 var addGeoJSON = function(list){
-    // it should remove the previous layers here first, but it doesn't work yet
+    // THis part should remove any previous route layers, but it doesn't work yet
 //    map.eachLayer(function(layer){
 //        if (layer._leaflet_id === "1"){
 //            map.removeLayer(layer);
 //	};
 //    });
     
-    // Make the new layer from the given GeoJSON
+    // Make the new layer 
     var route = new L.GeoJSON();
-//    route._leaflet_id = "1";
-//    console.log(route._leaflet_id);
+    // Add the individual GeoJSON linestrings to the layer
     list.forEach(function(line){        
         route.addData(line, { style: L.mapbox.simplestyle.style });
     });
+    // Set some additional styling
     route.setStyle({color:'red'});
+    // add the layer to the map
     route.addTo(map);
+    // zoom to layer
     map.fitBounds(route.getBounds());
+    // bring the layer on top of the floorplan
     route.bringToFront();
 };
-
-// This function creates a hover-over effect for buttons 
-function HoverButton(ID) {
-    $("#"+ID).hover(function(){
-        // If the mouse hovers over the buttons some CSS changes can be made
-        // Pick whatever colours of styling you want!
-        $("#"+ID).css("background-color", "#42A5F5");
-        },function(){
-        $("#"+ID).css("background-color", "#64B5F6");
-     });    
-}
-  
 
 // Error callback function -- displays error message in alert
 var fail = function (err) {
     alert("error: "+err);
     //print("Ajax fail");
 };
-
 
 // This is the main function that calls the server as well
 function getRSSi(){
@@ -77,45 +67,34 @@ function getRSSi(){
     $("#Navigate").hide();
     $("#ToStart").hide();
     $("#map").hide();
-    //$("#nextAppoint").hide();
-    //$("#Loading").hide();
-    
-    // Add the onHover effect to clickable buttons
-    HoverButton("Navigate");
-    HoverButton("ToStart");
+    // these below are for debugging:
+        //$("#nextAppoint").hide();
+        //$("#Loading").hide();
 
-    
     // When welcome page is clicked it is replaced by the main page
     $("#Welcome").on("click", function(){
         $("#pageone").show();
         $("#Welcome").hide();
     });
 
+    // As long as we're waiting for the server data we ask for some patience
     $("#Loading").on("click", function(){
         alert("Just a second, almost ready!");
     });
 
+    // When the navigate button is clicked the map is shown 
+    // and the 'back to start' button is loaded.
     $("#Navigate").on("click", function(){
         $("#Navigate").hide();
         $("#ToStart").show();
         $("#nextAppoint").hide();
         $("#map").show();
-    });
-
-    $("#ToStart").on("click", function(){
-        // Start over again
-        $("#nextAppoint").show();
-        $("#Loading").show();
-        //$("#Navigate").show();
-        getRSSi();
-
-    });  
-
+    }); 
 
     // test the printAppoint function with some dummy data
  //   printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
     
-    // Dummy GeoJSON 
+    // 2 Dummy GeoJSON lineStrings
     var DummyGeoJSON1 = [
             {
               "type": "Feature",
@@ -150,7 +129,6 @@ function getRSSi(){
           ];
     // test the addGeoJSON function with dummy data
     addGeoJSON([DummyGeoJSON1,DummyGeoJSON2]);
-   
 
     // Check the results of the getScanResults
     var listHandler = function (list) {      
@@ -180,14 +158,14 @@ function getRSSi(){
             var listObjects = list;
         }
 
-        //Sends the objects to the NodeJS server, and prints a message upon success
-        var RSSI = [
-            { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
-            { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
-            { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
-            { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-            { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
-            ];
+        //Dummy RSSi values
+        // var RSSI = [
+        //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
+        //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
+        //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
+        //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
+        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
+        //     ];
 
         // Converts the BSSID to capital letters
         for (i = 0; i < listObjects.length; i++){
@@ -196,23 +174,30 @@ function getRSSi(){
         }
 
         //print(JSON.stringify(listObjects));
-
         
         // Calls the server and sends the RSSI readings.
         $.ajax({
         url: 'http://192.168.0.117:8000',
-//        data: JSON.stringify(listObjects),
-        data: JSON.stringify(RSSI),
+        data: JSON.stringify(listObjects),
+  //      data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
+
  //           alert("Test! I think you're at node ",data[0]);
             data = JSON.parse(data);
             printAppoint(data);
+         
+            // The navigate button is enabled
             $("#Loading").hide();
             $("#Navigate").show();
-            addGeoJSON(data.slice(4));
+            
+            // The GeoJSON layers are already loaded to the map (in the background)
+            // As soon as the navigate button is clicked it will be shown.
+            
+//            addGeoJSON(data.slice(4));
         },
+            // When ajax fails the error message is shown as an alert
             error: function (xhr, status, error) {
                 alert('Error: ' + error.message);
             }
