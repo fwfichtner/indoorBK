@@ -90,24 +90,7 @@ function getRSSi(){
         $("#ToStart").show();
         $("#nextAppoint").hide();
         $("#map").show();
-    });
-
-    // When the to start button is clicked the next appointment 
-    // and the loading button needs to be shown. The functions getRSSI checks 
-    // the wifi again, calls the server, etc.
-    $("#ToStart").on("click", function(){
-        // Start over again
-        $("#nextAppoint").show();
-        $("#Loading").show();
-        //$("#Navigate").show();
-        getRSSi();
-    });  
-    
-    // When the update button is clicked it could update the user position/route
-    // We could also consider doing this automatically in the background
-    $("#Update").on("click", function(){
-        alert("Shall we add some fingerprint update function? Or do it automatic?");
-    });
+    }); 
 
     // test the printAppoint function with some dummy data
  //   printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
@@ -212,7 +195,8 @@ function getRSSi(){
             
             // The GeoJSON layers are already loaded to the map (in the background)
             // As soon as the navigate button is clicked it will be shown.
-            addGeoJSON(data.slice(4));
+            
+//            addGeoJSON(data.slice(4));
         },
             // When ajax fails the error message is shown as an alert
             error: function (xhr, status, error) {

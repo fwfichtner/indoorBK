@@ -10,16 +10,15 @@
 // list[1] = Event name
 // list[2] = Location name
 var printAppoint = function(list) {
-    alert(list[1]);
     $("#nextAppoint").html(
             "<div>"+
                 "<p><b>Next event:</b> </br>"+ list[1].toString() +"</p>"+
                 "<p><b>Location:</b> </br>"+ list[2].toString() +"</p>"+
                 // subtracting dates gives a result in millisecons. 
                 // This is multiplied with 2.77778e-7 to get hours and then rounded.
- //               "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
+//               "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
 //                *2.77778e-7).toString() +" hour(s)</b></p>"+
- "</div>"
+            "</div>"
             );
 };
 
@@ -68,10 +67,10 @@ function getRSSi(){
     $("#Welcome").show();
     $("#Navigate").hide();
     $("#ToStart").hide();
-    $("#map").hide();
-    //$("#nextAppoint").hide();
-    //$("#Loading").hide();
-
+    //$("#map").hide();
+    // these below are for debugging:
+        $("#nextAppoint").hide();
+        //$("#Loading").hide();
 
     // When welcome page is clicked it is replaced by the main page
     $("#Welcome").on("click", function(){
@@ -89,27 +88,9 @@ function getRSSi(){
     $("#Navigate").on("click", function(){
         $("#Navigate").hide();
         $("#ToStart").show();
-        $("#Update").show();
         $("#nextAppoint").hide();
         $("#map").show();
-    });
-
-    // When the to start button is clicked the next appointment 
-    // and the loading button needs to be shown. The functions getRSSI checks 
-    // the wifi again, calls the server, etc.
-    $("#ToStart").on("click", function(){
-        // Start over again
-        $("#nextAppoint").show();
-        $("#Loading").show();
-        //$("#Navigate").show();
-        getRSSi();
-    });  
-    
-    // When the update button is clicked it could update the user position/route
-    // We could also consider doing this automatically in the background
-    $("#Update").on("click", function(){
-        alert("Shall we add some fingerprint update function? Or do it automatic?");
-    });
+    }); 
 
     // test the printAppoint function with some dummy data
  //   printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
@@ -209,13 +190,13 @@ function getRSSi(){
             printAppoint(data);
          
             // The navigate button is enabled
-
             $("#Loading").hide();
             $("#Navigate").show();
             
             // The GeoJSON layers are already loaded to the map (in the background)
             // As soon as the navigate button is clicked it will be shown.
-            addGeoJSON(data.slice(4));
+            
+//            addGeoJSON(data.slice(4));
         },
             // When ajax fails the error message is shown as an alert
             error: function (xhr, status, error) {

@@ -70,10 +70,9 @@ html, body {
 
 .button {
     position: fixed;
-    left: 3%;
     top: 85vh;
     height: 10vh;
-    width: 94%;
+    width: 50%;
     background-color: #64B5F6;
     border: none;
     text-align: center;
@@ -91,12 +90,3 @@ html, body {
     line-height: 0.2;
 }
 
-#ToStart {
-    left: 3%;
-    width: 45%;
-}
-
-#Update {
-    left: 52%;
-    width: 45%;
-}
