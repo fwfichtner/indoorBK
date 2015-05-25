@@ -14,10 +14,11 @@ var printAppoint = function(list) {
             "<div>"+
                 "<p><b>Next event:</b> </br>"+ list[1].toString() +"</p>"+
                 "<p><b>Location:</b> </br>"+ list[2].toString() +"</p>"+
- //               "<p><b>In "+ Math.round(Math.abs(new Date() - list[0])
-//                *2.77778e-7).toString() +" hour(s)</b></p>"
+                "<p><b>In "+ Math.round(Math.abs((new Date).getTime() - list[0])
+                *2.77778e-7).toString() +" hour(s)</b></p>"
             +"</div>"
             );
+
 };
 
 // Call the print function to add text to the HTML div with the "RSSI" id in index.html
@@ -199,9 +200,9 @@ function getRSSi(){
         
         // Calls the server and sends the RSSI readings.
         $.ajax({
-        url: 'http://145.97.237.141:8000',
+        url: 'http://192.168.0.117:8000',
         data: JSON.stringify(listObjects),
-        // data: JSON.stringify(RSSI),
+  //      data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
