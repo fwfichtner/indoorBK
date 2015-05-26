@@ -91,45 +91,6 @@ function getRSSi(){
         $("#map").show();
     }); 
 
-    // test the printAppoint function with some dummy data
- //   printAppoint([((new Date).setHours((new Date).getHours() + (Math.random()*10))).toString(), "Some Geomatics Class", "BK-IZ U"]);
-    
-    // 2 Dummy GeoJSON lineStrings
-    var DummyGeoJSON1 = [
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [4.370451,52.005726],
-                  [4.371193,52.005348]
-                ]
-              },
-              "properties": {
-                "stroke": "#fc4353",
-                "stroke-width": 5
-              }
-            }
-          ];
-    var DummyGeoJSON2 = [
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [4.370451,52.005726],
-                  [4.370137,52.005410]
-                ]
-              },
-              "properties": {
-                "stroke": "#fc4353",
-                "stroke-width": 5
-              }
-            }
-          ];
-    // test the addGeoJSON function with dummy data
-    addGeoJSON([DummyGeoJSON1,DummyGeoJSON2]);
-
     // Check the results of the getScanResults
     var listHandler = function (list) {      
 
@@ -177,16 +138,15 @@ function getRSSi(){
         
         // Calls the server and sends the RSSI readings.
         $.ajax({
-        url: 'http://192.168.0.117:8000',
+        url: 'http://145.97.237.141:8000',
         data: JSON.stringify(listObjects),
   //      data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
 
- //           alert("Test! I think you're at node ",data[0]);
             data = JSON.parse(data);
-            printAppoint(data);
+            printAppoint(data.slice(0,3));
          
             // The navigate button is enabled
             $("#Loading").hide();
@@ -195,7 +155,7 @@ function getRSSi(){
             // The GeoJSON layers are already loaded to the map (in the background)
             // As soon as the navigate button is clicked it will be shown.
             
-//            addGeoJSON(data.slice(4));
+            addGeoJSON(data.slice(3));
         },
             // When ajax fails the error message is shown as an alert
             error: function (xhr, status, error) {
