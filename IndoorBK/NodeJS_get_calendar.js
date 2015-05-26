@@ -1,4 +1,4 @@
-exports.getCalendar = function () {
+exports.getCalendar = function (callback) {
 
   var fs = require('fs');
   var readline = require('readline');
@@ -120,14 +120,10 @@ exports.getCalendar = function () {
           var event = events[i];
           var start = event.start.dateTime || event.start.date;
           writeEvent = start + "#" + event.summary + "#" + event.location;
-          fs.writeFile("./test.txt",writeEvent,function(err) {
-            if(err) {
-              return console.log(err);
+          callback(err,writeEvent);     
             }
-          });
-        }
-      }
-    });
-  }
-
+          };
+        });
+    };
 }
+
