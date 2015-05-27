@@ -35,7 +35,7 @@ exports.getFingerprints = function (RSSI, callback) {
 
         //connect to database
         var pg = require('pg');
-        var conString = "postgres://postgres:Geomatics2015!@145.97.237.141:5432/postgres";
+        var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
 
         var client = new pg.Client(conString);
         client.connect();
