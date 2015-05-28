@@ -16,7 +16,7 @@ function calcRoute(nextEvent, startLine, destLine, response) {
     client.connect();
     console.log("Start ", startLine, "End: ", destLine);
     var SQL_ID = '"Id"';
-    var routeQuery = "SELECT "+SQL_ID+", ST_asGeoJSON(the_geom) as route FROM ways WHERE "+SQL_ID+" in (SELECT id1 AS node FROM pgr_dijkstra ('SELECT gid AS id, source::integer, target::integer, length::double precision AS cost FROM ways', "+startLine+", "+destLine+", false, false));";  
+    var routeQuery = "SELECT "+SQL_ID+", ST_asGeoJSON(the_geom) as route FROM ways WHERE "+SQL_ID+" in (SELECT id2 AS edge FROM pgr_dijkstra ('SELECT gid AS id, source::integer, target::integer, length::double precision AS cost FROM ways', "+startLine+", "+destLine+", false, false));";  
     var query1 = client.query(routeQuery);
     
     query1.on('row', function(row) {
