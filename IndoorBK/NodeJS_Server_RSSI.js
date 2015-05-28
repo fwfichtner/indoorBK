@@ -9,14 +9,15 @@ var pg = require('pg');
 //Lets define a port we want to listen to
 const PORT=8000;
 
-function calcRoute(startPoint, nextEvent, startLine, destLine, destPoint, response) {
+function calcRoute(startPoint, nextEvent, source, target, destPoint, response) {
     // Calculate the route 
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
     client.connect();
-    console.log("Start ", startLine, "End: ", destLine);
-    var SQL_ID = '"Id"';
-    var routeQuery = "SELECT "+SQL_ID+", ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) as route FROM ways WHERE "+SQL_ID+" in (SELECT id1 AS node FROM pgr_dijkstra ('SELECT gid AS id, source::integer, target::integer, length::double precision AS cost FROM ways', "+startLine+", "+destLine+", false, false));";  
+    var SQL_ID = 'gid';
+    console.log(source);
+    console.log(target);
+    var routeQuery = "SELECT "+SQL_ID+", ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) as route FROM ways WHERE "+SQL_ID+" in (SELECT id2 AS edge FROM pgr_dijkstra ('SELECT gid AS id, source::integer, target::integer, length::double precision AS cost FROM ways', "+source+", "+target+", false, false));";  
     var query1 = client.query(routeQuery);
     route = [];
     
@@ -32,17 +33,25 @@ function calcRoute(startPoint, nextEvent, startLine, destLine, destPoint, respon
         } else {
             console.log("route computed!");
             
-            // Adds the route to the nextevent array, then creates JSON
+            // Adds the computed routes to the nextEvent
+            for (i = 0; i < route.length; i++) {
+                route[i] = JSON.parse(route[i]);
+                nextEvent.push(route[i]);
+            }
+
+            // Adds the start and end point to the linestrings
             start_parsed = JSON.parse(startPoint);
             dest_parsed = JSON.parse(destPoint);
-            route_parsed = JSON.parse(route[0]);
-            route_parsed.coordinates.splice(0,0,start_parsed.coordinates);
-            route_parsed.coordinates.push(dest_parsed.coordinates);
-            nextEvent.push(route_parsed);
-            reply = JSON.stringify(nextEvent);
-            console.log(reply);
+            nextEvent[nextEvent.length - 1].coordinates.splice(0,0,dest_parsed.coordinates);
+            nextEvent[3].coordinates.push(start_parsed.coordinates);
+            
+            // Adds start and end point to the route (so we can display them...)
+            nextEvent.push(start_parsed);
+            nextEvent.push(dest_parsed);
 
             // return the calendar and route
+            reply = JSON.stringify(nextEvent);
+            console.log(reply);
             response.write(reply);
 
             // everything has completed successfully
@@ -52,12 +61,12 @@ function calcRoute(startPoint, nextEvent, startLine, destLine, destPoint, respon
     });
 }
 
-function getNodeGeom(position, nextEvent, startLine, destLine, destNode, response) {
+function getNodeGeom(position, nextEvent, source, target, destNode, response) {
     console.log("finding node geometry");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
     client.connect();
-    var startQuery = "SELECT ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) FROM ways_vertices_pgr WHERE id = " + position + " OR id = " + destNode + ";";  
+    var startQuery = "SELECT ST_asGeoJSON(ST_Transform(ST_SetSRID(geom,3857),4326)) FROM nodes WHERE id = " + position + " OR id = " + destNode + ";";  
     var query2 = client.query(startQuery);
     rows = [];
     
@@ -74,35 +83,35 @@ function getNodeGeom(position, nextEvent, startLine, destLine, destNode, respons
             console.log("calculating route!");
             startPoint = rows[0].st_asgeojson;
             destPoint = rows[1].st_asgeojson;
-            calcRoute(startPoint, nextEvent, startLine, destLine, destPoint, response);
+            calcRoute(startPoint, nextEvent, source, target, destPoint, response);
         }
     });
 }
 
 
-function findStartline(position, nextEvent, destLine, destNode, response) {
-    // Matches starting node to starting line
+function findStartline(position, nextEvent, target, destNode, response) {
+    // Matches starting node to source
     console.log("finding startline");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
     client.connect();
-    var startQuery = "SELECT neighborlines FROM mappings WHERE node = " + position + ";";  
+    var startQuery = "SELECT source FROM mappings WHERE node = " + position + ";";  
     var query2 = client.query(startQuery);
     var rows = [];
     
     query2.on('row', function(row) {
         rows.push(row);
-        startLine = row.neighborlines;
-        console.log("startLine found!");
+        source = row.source;
+        console.log("source found!");
     });
 
     query2.on('end', function() { 
         client.end();
         if (rows.length == 0) {
-            destination = "Your start location is not in the database!";
+            destination = "Your source is not in the database!";
         } else {
             console.log("calculating route!");
-            getNodeGeom(position, nextEvent, startLine, destLine, destNode, response);
+            getNodeGeom(position, nextEvent, source, target, destNode, response);
         }
     });
 }
@@ -111,25 +120,25 @@ function findDestnode (position, nextEvent, nextLoc, response) {
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
     client.connect();
-    var query_string = "SELECT node, neighborlines FROM mappings WHERE room = '" + nextLoc + "';";  
+    var query_string = "SELECT node, target FROM mappings WHERE room = '" + nextLoc + "';";  
     var query = client.query(query_string);
     rows = [];
     console.log("first query done");
     
     query.on('row', function(row) {
         rows.push(row); 
+        target = row.target;
         destNode = row.node;
-        destLine = row.neighborlines;
     });
 
     query.on('end', function() { 
         client.end();
         if (rows.length == 0) {
-            destination = "Your destination is not in the database!";
+            destination = "Your target is not in the database!";
         } else { 
             destination = "placeholder";
             console.log("calling findline");
-            findStartline(position, nextEvent, destLine, destNode, response);
+            findStartline(position, nextEvent, target, destNode, response);
         }
     });
 }
@@ -155,10 +164,10 @@ function handleRequest(request, response){
             
             // Get the next event from the calendar
             
-            calendar.getCalendar(function callback(err, nextEvent){
-                if (err) throw err;
+            //calendar.getCalendar(function callback(err, nextEvent){
+            //    if (err) throw err;
                 
-  //              nextEvent = "13:00#SomeClass#BK-IZ R"
+                nextEvent = "13:00#SomeClass#BK-IZ R"
                 nextEvent = nextEvent.split("#");
                 console.log(nextEvent);
 
@@ -173,7 +182,7 @@ function handleRequest(request, response){
                 } else {
                     destination = "Your destination is not in BK!";
                 }
-            });
+            //});
             
             
         });   

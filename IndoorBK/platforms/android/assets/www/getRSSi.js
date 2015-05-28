@@ -138,6 +138,7 @@ function getRSSi(){
         //print(JSON.stringify(listObjects));
         
         // Calls the server and sends the RSSI readings.
+        alert("sending data");
         $.ajax({
         url: 'http://145.97.243.61:8000',
        // data: JSON.stringify(listObjects),
@@ -145,6 +146,7 @@ function getRSSi(){
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {
+            alert("getting data");
             data = JSON.parse(data);
             printAppoint(data.slice(0,3));
          

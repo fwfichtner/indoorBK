@@ -37,7 +37,6 @@ var addGeoJSON = function(list){
 //    });
     
     // Make the new layer 
-    alert(list.length);
     route = new L.GeoJSON();
     // Add the individual GeoJSON linestrings to the layer
     list.forEach(function(line){        
