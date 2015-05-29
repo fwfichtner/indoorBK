@@ -67,9 +67,9 @@ function getRSSi(){
     $("#Navigate").hide();
     $("#ToStart").hide();
     $("#map").hide();
-    // these below are for debugging:
-        //$("#nextAppoint").hide();
-        //$("#Loading").hide();
+//     these below are for debugging:
+//        $("#nextAppoint").hide();
+//        $("#Loading").hide();
 
     // When welcome page is clicked it is replaced by the main page
     $("#Welcome").on("click", function(){
