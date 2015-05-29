@@ -120,13 +120,13 @@ function getRSSi(){
         }
 
         //Dummy RSSi values
-        var RSSI = [
-            { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
-            { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
-            { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
-            { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-            { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
-            ];
+        // var RSSI = [
+        //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
+        //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
+        //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
+        //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
+        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
+        //     ];
 
         // Converts the BSSID to capital letters
         for (i = 0; i < listObjects.length; i++){
@@ -139,8 +139,8 @@ function getRSSi(){
         // Calls the server and sends the RSSI readings.
         $.ajax({
         url: 'http://145.97.243.61:8000',
-       // data: JSON.stringify(listObjects),
-        data: JSON.stringify(RSSI),
+        data: JSON.stringify(listObjects),
+  //      data: JSON.stringify(RSSI),
         contentType: 'application/json',
         type: 'POST',      
         success: function (data) {

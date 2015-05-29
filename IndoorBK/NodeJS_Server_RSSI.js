@@ -167,7 +167,7 @@ function handleRequest(request, response){
             //calendar.getCalendar(function callback(err, nextEvent){
             //    if (err) throw err;
                 
-                nextEvent = "13:00#SomeClass#BK-IZ R"
+ //               nextEvent = "13:00#SomeClass#BK-IZ R"
                 nextEvent = nextEvent.split("#");
                 console.log(nextEvent);
 
