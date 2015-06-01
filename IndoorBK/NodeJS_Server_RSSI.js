@@ -15,8 +15,6 @@ function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, 
     var client = new pg.Client(conString);
     client.connect();
     var SQL_ID = 'gid';
-    console.log(source);
-    console.log(target);
     var routeQuery = "SELECT "+SQL_ID+", ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) as route FROM ways WHERE "+SQL_ID+" in (SELECT id2 AS edge FROM pgr_dijkstra ('SELECT gid AS id, source::integer, target::integer, length::double precision AS cost FROM ways', "+source+", "+target+", false, false));";  
     var query1 = client.query(routeQuery);
     route = [];
@@ -53,7 +51,6 @@ function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, 
 
             // return the calendar and route
             reply = JSON.stringify(nextEvent);
-            console.log(reply);
             response.write(reply);
 
             // everything has completed successfully
@@ -83,7 +80,6 @@ function getStartlineGeom(startGid, startPoint, nextEvent, source, target, destP
         } else {
             console.log("calculating route!");
             startLine = rows[0].st_asgeojson;
-            console.log(startLine);
             calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, response);
         }
     });
@@ -101,7 +97,6 @@ function getNodeGeom(position, startGid, nextEvent, source, target, destNode, re
     
     query2.on('row', function(row) {
         rows.push(row);
-        console.log(rows);
     });
 
     query2.on('end', function() { 
@@ -182,11 +177,11 @@ function handleRequest(request, response){
 	request.on("data", function(chunk) {
         console.log("receiving data");
         RSSI = JSON.parse(chunk);
-        console.log(RSSI);
   	});
     
     request.on("end", function() {
         console.log("All data received");
+        console.log(RSSI);
         
         // Find the location of the user via WiFi Fingerprinting   
         FP.getFingerprints(RSSI, function (position, err) {
@@ -205,7 +200,12 @@ function handleRequest(request, response){
                 nextEvent[0] = nextTime;
 
                 // Matches the Calendar location to destination node
-                var nextLoc = nextEvent[2];
+                if (RSSI[RSSI.length - 1] == "BK-IZ R") {
+                    var nextLoc = "BK-IZ R";
+                    nextEvent[2] = nextLoc;
+                } else {
+                    var nextLoc = nextEvent[2];
+                }              
 
                 if (position == -1) {
                     nextEvent.push(position);

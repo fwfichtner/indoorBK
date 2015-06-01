@@ -158,9 +158,10 @@ function getRSSi(){
 
                 if (data.length < 4) {
                     alert("Your destination is not in BK!");
-                    if (confirm("Do you want to try again?")) {
+                    if (confirm("Do you want to use a dummy destination?")) {
                         $("#Welcome").show();
                         $("#pageone").hide();
+                        list.push("BK-IZ R");
                         connectServer(list);
                     } else {
                         alert("No route could be determined!");

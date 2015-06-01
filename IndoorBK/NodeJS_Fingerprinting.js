@@ -14,8 +14,12 @@ exports.getFingerprints = function (RSSI, callback) {
         var arr_mac = [];
         var arr_strength = [];
         for (i = 0; i < RSSI.length; i++){
-            arr_mac.push(RSSI[i].BSSID);
-            arr_strength.push(Math.abs(RSSI[i].level))
+            if (typeof RSSI[i] === 'String') {
+                continue;
+            } else {
+                arr_mac.push(RSSI[i].BSSID);
+                arr_strength.push(Math.abs(RSSI[i].level))
+            }
         };
 
         //build query
@@ -51,7 +55,7 @@ exports.getFingerprints = function (RSSI, callback) {
 
         query.on('end', function() { 
             if (rows.length == 0) {
-                loc_code = "You are not in BK!";
+                loc_code = -1;
             } else {
                 loc_code = rows[0].locations;
             }
