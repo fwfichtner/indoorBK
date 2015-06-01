@@ -9,7 +9,7 @@ var pg = require('pg');
 //Lets define a port we want to listen to
 const PORT=8000;
 
-function calcRoute(startPoint, nextEvent, source, target, destPoint, response) {
+function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, response) {
     // Calculate the route 
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -42,12 +42,14 @@ function calcRoute(startPoint, nextEvent, source, target, destPoint, response) {
             // Adds the start and end point to the linestrings
             start_parsed = JSON.parse(startPoint);
             dest_parsed = JSON.parse(destPoint);
-            nextEvent[nextEvent.length - 1].coordinates.splice(0,0,dest_parsed.coordinates);
-            nextEvent[3].coordinates.push(start_parsed.coordinates);
+            startLine_parsed = JSON.parse(startLine);
+ //           nextEvent[nextEvent.length - 1].coordinates.splice(0,0,dest_parsed.coordinates);
+ //           nextEvent[3].coordinates.push(start_parsed.coordinates);
             
             // Adds start and end point to the route (so we can display them...)
             nextEvent.push(start_parsed);
             nextEvent.push(dest_parsed);
+            nextEvent.push(startLine_parsed);
 
             // return the calendar and route
             reply = JSON.stringify(nextEvent);
@@ -61,7 +63,34 @@ function calcRoute(startPoint, nextEvent, source, target, destPoint, response) {
     });
 }
 
-function getNodeGeom(position, nextEvent, source, target, destNode, response) {
+function getStartlineGeom(startGid, startPoint, nextEvent, source, target, destPoint, response) {
+    console.log("finding startline geometry");
+    var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
+    var client = new pg.Client(conString);
+    client.connect();
+    var startQuery = "SELECT ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) FROM ways WHERE gid = " + startGid + ";";  
+    var query2 = client.query(startQuery);
+    rows = [];
+    
+    query2.on('row', function(row) {
+        rows.push(row);
+    });
+
+    query2.on('end', function() { 
+        client.end();
+        if (rows.length == 0) {
+            console.log("Your geometry is not in the database!");
+        } else {
+            console.log("calculating route!");
+            startLine = rows[0].st_asgeojson;
+            console.log(startLine);
+            calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, response);
+        }
+    });
+}
+
+
+function getNodeGeom(position, startGid, nextEvent, source, target, destNode, response) {
     console.log("finding node geometry");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -80,10 +109,10 @@ function getNodeGeom(position, nextEvent, source, target, destNode, response) {
         if (rows.length == 0) {
             destination = "Your geometry is not in the database!";
         } else {
-            console.log("calculating route!");
+            console.log("fetching line geometry!");
             startPoint = rows[0].st_asgeojson;
             destPoint = rows[1].st_asgeojson;
-            calcRoute(startPoint, nextEvent, source, target, destPoint, response);
+            getStartlineGeom(startGid, startPoint, nextEvent, source, target, destPoint, response);
         }
     });
 }
@@ -95,13 +124,14 @@ function findStartline(position, nextEvent, target, destNode, response) {
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
     client.connect();
-    var startQuery = "SELECT source FROM mappings WHERE node = " + position + ";";  
+    var startQuery = "SELECT source, gid FROM mappings WHERE node = " + position + ";";  
     var query2 = client.query(startQuery);
     var rows = [];
     
     query2.on('row', function(row) {
         rows.push(row);
         source = row.source;
+        startGid = row.gid;
         console.log("source found!");
     });
 
@@ -111,7 +141,7 @@ function findStartline(position, nextEvent, target, destNode, response) {
             destination = "Your source is not in the database!";
         } else {
             console.log("calculating route!");
-            getNodeGeom(position, nextEvent, source, target, destNode, response);
+            getNodeGeom(position, startGid, nextEvent, source, target, destNode, response);
         }
     });
 }
@@ -164,12 +194,11 @@ function handleRequest(request, response){
             
             // Get the next event from the calendar
             
-            //calendar.getCalendar(function callback(err, nextEvent){
-            //    if (err) throw err;
+            calendar.getCalendar(function callback(err, nextEvent){
+                if (err) throw err;
                 
  //               nextEvent = "13:00#SomeClass#BK-IZ R"
                 nextEvent = nextEvent.split("#");
-                console.log(nextEvent);
 
                 // Parse Google Calendar API time to Javascript time object in milliseconds
                 var nextTime = Date.parse(nextEvent[0]);
@@ -177,12 +206,21 @@ function handleRequest(request, response){
 
                 // Matches the Calendar location to destination node
                 var nextLoc = nextEvent[2];
-                if (nextLoc.substr(0,2) == "BK") {
+
+                if (position == -1) {
+                    nextEvent.push(position);
+                    response.write(JSON.stringify(nextEvent));
+                    console.log("The location is not in BK!");
+                    response.end();                    
+                } else if (["BK-IZ R","BK-IZ Z","BK-IZ V","Bouwpub","Geolab"].indexOf(nextLoc) !== -1) {
                     findDestnode(position, nextEvent, nextLoc, response);
                 } else {
-                    destination = "Your destination is not in BK!";
+                    response.write(JSON.stringify(nextEvent));
+                    console.log("The destination is not in BK!");
+                    response.end();
                 }
-            //});
+
+            });
             
             
         });   

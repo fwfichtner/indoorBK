@@ -62,8 +62,8 @@ var fail = function (err) {
 function getRSSi(){
 
     // Show and hide specific divs
-    $("#pageone").hide();
     $("#Welcome").show();
+    $("#pageone").hide();
     $("#Navigate").hide();
     $("#ToStart").hide();
     $("#map").hide();
@@ -71,11 +71,11 @@ function getRSSi(){
 //        $("#nextAppoint").hide();
 //        $("#Loading").hide();
 
-    // When welcome page is clicked it is replaced by the main page
-    $("#Welcome").on("click", function(){
-        $("#pageone").show();
-        $("#Welcome").hide();
-    });
+    // // When welcome page is clicked it is replaced by the main page
+    // $("#Welcome").on("click", function(){
+    //     $("#pageone").show();
+    //     $("#Welcome").hide();
+    // });
 
     // As long as we're waiting for the server data we ask for some patience
     $("#Loading").on("click", function(){
@@ -120,13 +120,13 @@ function getRSSi(){
         }
 
         //Dummy RSSi values
-        // var RSSI = [
-        //     { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
-        //     { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
-        //     { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
-        //     { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
-        //     { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
-        //     ];
+        var RSSI = [
+            { level : -58.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-21" },
+            { level : -58.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-40" },
+            { level : -57.0, SSID: "tudelft-dastud", BSSID : "00-22-90-5E-69-20" },
+            { level : -57.0, SSID: "TUvisitor", BSSID : "00-22-90-38-AE-41" },
+            { level : -56.0, SSID: "TUvisitor", BSSID : "00:22:90-38-AE-42" }
+            ];
 
         // Converts the BSSID to capital letters
         for (i = 0; i < listObjects.length; i++){
@@ -134,32 +134,62 @@ function getRSSi(){
         listObjects[i].BSSID = listObjects[i].BSSID.replace(/:/g,"-");
         }
 
-        //print(JSON.stringify(listObjects));
-        
+        if (confirm("Press 'OK' to use RSSI measurements, or press 'cancel' to use dummy values")) {
+            connectServer(listObjects);
+        } else {
+            connectServer(RSSI);
+        }
+       
+
         // Calls the server and sends the RSSI readings.
-        $.ajax({
-        url: 'http://145.97.243.61:8000',
-        data: JSON.stringify(listObjects),
-  //      data: JSON.stringify(RSSI),
-        contentType: 'application/json',
-        type: 'POST',      
-        success: function (data) {
-            data = JSON.parse(data);
-            printAppoint(data.slice(0,3));
-         
-            // The navigate button is enabled
-            $("#Loading").hide();
-            $("#Navigate").show();
-            
-            // The GeoJSON layers are already loaded to the map (in the background)
-            // As soon as the navigate button is clicked it will be shown.
-            addGeoJSON(data.slice(3));
-        },
-            // When ajax fails the error message is shown as an alert
-            error: function (xhr, status, error) {
-                alert('Error: ' + error.message);
-            }
-        });
+        function connectServer(list) {
+            $.ajax({
+            url: 'http://145.97.243.61:8000',
+            data: JSON.stringify(list),
+            contentType: 'application/json',
+            type: 'POST',      
+            success: function (data) {
+                data = JSON.parse(data);
+                printAppoint(data.slice(0,3));
+                $("#Welcome").hide();
+                $("#pageone").show();
+                $("#Loading").hide();
+                $("#Navigate").show();
+
+                if (data.length < 4) {
+                    alert("Your destination is not in BK!");
+                    if (confirm("Do you want to try again?")) {
+                        $("#Welcome").show();
+                        $("#pageone").hide();
+                        connectServer(list);
+                    } else {
+                        alert("No route could be determined!");
+                    }
+                } else if (data[3] == -1) {
+                    alert("Your current location is not in BK!");
+                    if (confirm("Do you want to try again?")) {
+                        $("#Welcome").show();
+                        $("#pageone").hide();
+                        getRSSi();
+                    } else {
+                        alert("No route could be determined!");
+                    }
+                } else {
+                    addGeoJSON(data.slice(3));
+                }
+                
+            },
+                // When ajax fails the error message is shown as an alert
+                error: function (xhr, status, error) {
+                    alert('Error: an error occurred in the server!');
+                    if (confirm("Do you want to try again?")) {
+                        connectServer(list);
+                    } else {
+                        alert("Application stopped");
+                    }
+                }
+            });
+        }
     };
     
     // Retrieves the RSSI values
