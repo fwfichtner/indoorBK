@@ -30,12 +30,14 @@ var print = function(text) {
 // This function adds GeoJSON to map
 var addGeoJSON = function(list){
 
-    //THis part should remove any previous route layers, but it doesn't work yet
+    // THis part should remove any previous route layers, but it doesn't work yet
     // map.eachLayer(function(layer){
-    //     if (layer._leaflet_id == test[0]){
-    //         map.removeLayer(layer);
-    //     };
+    //     map.removeLayer(layer);
     // });
+
+    if (typeof route !== 'undefined') {
+        route.clearLayers();
+    }
 
     // Make the new layer 
     route = new L.GeoJSON();
@@ -69,7 +71,7 @@ var fail = function (err) {
 
 
 
-function update(destNode, target) {
+function update(destNode, destGid, target) {
 
     // Retrieves the updated RSSI values and executes listHandlerAuto
     WifiWizard.getScanResults({numLevels: false}, listHandlerAuto, fail);
@@ -119,10 +121,12 @@ function update(destNode, target) {
         // Useful for debugging: Gives you the choice to use RSSI measurements, or dummy values
         if (confirm("Press 'OK' to use RSSI measurements, or press 'cancel' to use dummy values")) {
             listObjects.push(destNode);
+            listObjects.push(destGid);
             listObjects.push(target);
             connectServerAuto(listObjects);
         } else {
             RSSI.push(destNode);
+            RSSI.push(destGid);
             RSSI.push(target);
             connectServerAuto(RSSI);
         }
@@ -177,6 +181,8 @@ function connectServer(list) {
                 list.push("BK-IZ R");
                 connectServer(list);
             } else {
+                $("#Loading").hide();
+                $("#ToStart").show();
                 alert("No route could be determined!");
             }
         } else if (data[3] == -1) {
@@ -186,13 +192,16 @@ function connectServer(list) {
                 $("#pageone").hide();
                 getRSSi();
             } else {
+                $("#Loading").hide();
+                $("#ToStart").show();
                 alert("No route could be determined!");
             }
         } else {
             addGeoJSON(data.slice(3,data.length - 1));
             var newdata = data[data.length - 1];
             destNode = newdata[0];
-            target = newdata[1];
+            destGid = newdata[1];
+            target = newdata[2];
 
 
         }
@@ -298,7 +307,7 @@ function getRSSi(){
         
         // execute autoUpdate function after every 5 seconds
         window.setTimeout(autoUpdate, 10000);
-        var autoUpdate = setInterval(function () {update(destNode, target)}, 10000);
+        var autoUpdate = setInterval(function () {update(destNode, destGid, target)}, 10000);
 
     }); 
 

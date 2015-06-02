@@ -8,7 +8,7 @@ var pg = require('pg');
 //Lets define a port we want to listen to
 const PORT=8080;
 
-function calcRoute(startPoint, startLine, source, target, destPoint, response) {
+function calcRoute(startPoint, startLine, source, target, destPoint, destLine, response) {
     // Calculate the route 
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -41,6 +41,7 @@ function calcRoute(startPoint, startLine, source, target, destPoint, response) {
             start_parsed = JSON.parse(startPoint);
             dest_parsed = JSON.parse(destPoint);
             startLine_parsed = JSON.parse(startLine);
+            destLine_parsed = JSON.parse(destLine);
  //           nextEvent[nextEvent.length - 1].coordinates.splice(0,0,dest_parsed.coordinates);
  //           nextEvent[3].coordinates.push(start_parsed.coordinates);
             
@@ -48,6 +49,7 @@ function calcRoute(startPoint, startLine, source, target, destPoint, response) {
             nextEvent.push(start_parsed);
             nextEvent.push(dest_parsed);
             nextEvent.push(startLine_parsed);
+            nextEvent.push(destLine_parsed);
 
             // return the updated route
             reply = JSON.stringify(nextEvent);
@@ -60,7 +62,32 @@ function calcRoute(startPoint, startLine, source, target, destPoint, response) {
     });
 }
 
-function getStartlineGeom(startGid, startPoint, source, target, destPoint, response) {
+function getEndlineGeom(startPoint, startLine, source, target, destPoint, destGid, response) {
+    console.log("finding startline geometry");
+    var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
+    var client = new pg.Client(conString);
+    client.connect();
+    var startQuery = "SELECT ST_asGeoJSON(ST_Transform(ST_SetSRID(the_geom,3857),4326)) FROM ways WHERE gid = " + destGid + ";";  
+    var query2 = client.query(startQuery);
+    rows = [];
+    
+    query2.on('row', function(row) {
+        rows.push(row);
+    });
+
+    query2.on('end', function() { 
+        client.end();
+        if (rows.length == 0) {
+            console.log("Your geometry is not in the database!");
+        } else {
+            console.log("calculating route!");
+            destLine = rows[0].st_asgeojson;
+            calcRoute(startPoint, startLine, source, target, destPoint, destLine, response);
+        }
+    });
+}
+
+function getStartlineGeom(startGid, startPoint, source, target, destPoint, destGid, response) {
     console.log("finding startline geometry");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -80,13 +107,13 @@ function getStartlineGeom(startGid, startPoint, source, target, destPoint, respo
         } else {
             console.log("calculating route!");
             startLine = rows[0].st_asgeojson;
-            calcRoute(startPoint, startLine, source, target, destPoint, response);
+            getEndlineGeom(startPoint, startLine, source, target, destPoint, destGid, response);
         }
     });
 }
 
 
-function getNodeGeom(position, startGid, source, target, destNode, response) {
+function getNodeGeom(position, startGid, source, target, destNode, destGid, response) {
     console.log("finding node geometry");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -107,13 +134,13 @@ function getNodeGeom(position, startGid, source, target, destNode, response) {
             console.log("fetching line geometry!");
             startPoint = rows[0].st_asgeojson;
             destPoint = rows[1].st_asgeojson;
-            getStartlineGeom(startGid, startPoint, source, target, destPoint, response);
+            getStartlineGeom(startGid, startPoint, source, target, destPoint, destGid, response);
         }
     });
 }
 
 
-function findStartline(position, target, destNode, response) {
+function findStartline(position, target, destNode, destGid, response) {
     // Matches starting node to source
     console.log("finding startline");
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
@@ -136,7 +163,7 @@ function findStartline(position, target, destNode, response) {
             destination = "Your source is not in the database!";
         } else {
             console.log("calculating route!");
-            getNodeGeom(position, startGid, source, target, destNode, response);
+            getNodeGeom(position, startGid, source, target, destNode, destGid, response);
         }
     });
 }
@@ -155,7 +182,8 @@ function handleRequest(request, response){
         console.log("All data received");
         console.log(RSSI);
 
-        destNode = RSSI[RSSI.length - 2];
+        destNode = RSSI[RSSI.length - 3];
+        destGid = RSSI[RSSI.length - 2];
         target = RSSI[RSSI.length - 1];
         
         // Find the location of the user via WiFi Fingerprinting   
@@ -168,7 +196,7 @@ function handleRequest(request, response){
                     console.log("The location is not in BK!");
                     response.end();                    
                 } else {
-                    findStartline(position, target, destNode, response);
+                    findStartline(position, target, destNode, destGid, response);
                 }
         });   
   	});

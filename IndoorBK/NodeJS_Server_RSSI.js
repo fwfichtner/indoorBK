@@ -9,7 +9,7 @@ var pg = require('pg');
 //Lets define a port we want to listen to
 const PORT=8000;
 
-function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, destNode, destLine, response) {
+function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, destNode, destLine, destGid, response) {
     // Calculate the route 
     var conString = "postgres://postgres:Geomatics2015!@145.97.243.61:5432/postgres";
     var client = new pg.Client(conString);
@@ -50,7 +50,7 @@ function calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, 
             nextEvent.push(dest_parsed);
             nextEvent.push(startLine_parsed);
             nextEvent.push(destLine_parsed);
-            nextEvent.push([destNode, target]);
+            nextEvent.push([destNode, destGid, target]);
 
             // return the calendar and route
             reply = JSON.stringify(nextEvent);
@@ -83,7 +83,7 @@ function getEndlineGeom(startPoint, startLine, nextEvent, source, target, destPo
         } else {
             console.log("calculating route!");
             destLine = rows[0].st_asgeojson;
-            calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, destNode, destLine, response);
+            calcRoute(startPoint, startLine, nextEvent, source, target, destPoint, destNode, destLine, destGid, response);
         }
     });
 }
