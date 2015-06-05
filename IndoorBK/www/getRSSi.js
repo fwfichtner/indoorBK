@@ -175,19 +175,19 @@ function connectServer(list) {
         $("#Welcome").hide();
         $("#pageone").show();
 
-        if (data.length < 4) {
-            alert("Your destination is not in BK!");
-            if (confirm("Do you want to use a dummy destination?")) {
-                $("#Welcome").show();
-                $("#pageone").hide();
-                list.push("BK-IZ R");
-                connectServer(list);
-            } else {
-                $("#Loading").hide();
-                $("#ToStart").show();
-                alert("No route could be determined!");
-            }
-        } else if (data[3] == -1) {
+        // if (data.length < 4) {
+        //     alert("Your destination is not in BK!");
+        //     if (confirm("Do you want to use a dummy destination?")) {
+        //         $("#Welcome").show();
+        //         $("#pageone").hide();
+        //         list.push("BK-IZ R");
+        //         connectServer(list);
+        //     } else {
+        //         $("#Loading").hide();
+        //         $("#ToStart").show();
+        //         alert("No route could be determined!");
+        //     }
+        } if (data[3] == -1) {
             alert("Your current location is not in BK!");
             if (confirm("Do you want to try again?")) {
                 $("#Welcome").show();
@@ -268,8 +268,10 @@ function listHandler (list) {
 
     // Useful for debugging: Gives you the choice to use RSSI measurements, or dummy values
     if (confirm("Press 'OK' to use RSSI measurements, or press 'cancel' to use dummy values")) {
+        listObjects.push("BK-IZ R");
         connectServer(listObjects);
     } else {
+        RSSI.push("BK-IZ R");
         connectServer(RSSI);
     }
 }
@@ -308,8 +310,8 @@ function getRSSi(){
         $("#map").show();
         
         // execute autoUpdate function after every 5 seconds
-        window.setTimeout(autoUpdate, 10000);
-        var autoUpdate = setInterval(function () {update(destNode, destGid, target)}, 10000);
+        window.setTimeout(autoUpdate, 5000);
+        var autoUpdate = setInterval(function () {update(destNode, destGid, target)}, 5000);
 
     }); 
 
