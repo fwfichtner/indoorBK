@@ -30,21 +30,18 @@ var print = function(text) {
 // This function adds GeoJSON to map
 var addGeoJSON = function(list){
 
-    // THis part should remove any previous route layers, but it doesn't work yet
-    // map.eachLayer(function(layer){
-    //     map.removeLayer(layer);
-    // });
-
     if (typeof route !== 'undefined') {
         route.clearLayers();
     }
 
     // Make the new layer 
     route = new L.GeoJSON();
+
     // Add the individual GeoJSON linestrings to the layer
     list.forEach(function(line){        
         route.addData(line, { style: L.mapbox.simplestyle.style });
     });
+    
     // Set some additional styling
     route.setStyle({color:'red'});
 
@@ -118,23 +115,28 @@ function update(destNode, destGid, target) {
         listObjects[i].BSSID = listObjects[i].BSSID.replace(/:/g,"-");
         }
 
-        // Useful for debugging: Gives you the choice to use RSSI measurements, or dummy values
-        if (confirm("Press 'OK' to use RSSI measurements, or press 'cancel' to use dummy values")) {
-            listObjects.push(destNode);
-            listObjects.push(destGid);
-            listObjects.push(target);
-            connectServerAuto(listObjects);
-        } else {
-            RSSI.push(destNode);
-            RSSI.push(destGid);
-            RSSI.push(target);
-            connectServerAuto(RSSI);
-        }
+        listObjects.push(destNode);
+        listObjects.push(destGid);
+        listObjects.push(target);
+        connectServerAuto(listObjects);
+
+        // // Useful for debugging: Gives you the choice to use RSSI measurements, or dummy values
+        // if (confirm("Press 'OK' to use RSSI measurements, or press 'cancel' to use dummy values")) {
+        //     listObjects.push(destNode);
+        //     listObjects.push(destGid);
+        //     listObjects.push(target);
+        //     connectServerAuto(listObjects);
+        // } else {
+        //     RSSI.push(destNode);
+        //     RSSI.push(destGid);
+        //     RSSI.push(target);
+        //     connectServerAuto(RSSI);
+        // }
     }
 
     function connectServerAuto(list) {
         $.ajax({
-        url: 'http://145.97.243.61:8080',
+        url: 'http://145.90.76.92:8080',
         data: JSON.stringify(list),
         contentType: 'application/json',
         type: 'POST',      
@@ -163,7 +165,7 @@ function update(destNode, destGid, target) {
 // Calls the server and sends the RSSI readings.
 function connectServer(list) {
     $.ajax({
-    url: 'http://145.97.243.61:8000',
+    url: 'http://145.90.76.92:8000',
     data: JSON.stringify(list),
     contentType: 'application/json',
     type: 'POST',      
