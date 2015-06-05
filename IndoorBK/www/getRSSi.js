@@ -187,7 +187,7 @@ function connectServer(list) {
         //         $("#ToStart").show();
         //         alert("No route could be determined!");
         //     }
-        } if (data[3] == -1) {
+        if (data[3] == -1) {
             alert("Your current location is not in BK!");
             if (confirm("Do you want to try again?")) {
                 $("#Welcome").show();
@@ -204,8 +204,6 @@ function connectServer(list) {
             destNode = newdata[0];
             destGid = newdata[1];
             target = newdata[2];
-
-
         }
         
     },
