@@ -136,7 +136,7 @@ function update(destNode, destGid, target) {
 
     function connectServerAuto(list) {
         $.ajax({
-        url: 'http://145.90.76.92:8080',
+        url: 'http://192.168.1.192:8080',
         data: JSON.stringify(list),
         contentType: 'application/json',
         type: 'POST',      
@@ -165,7 +165,7 @@ function update(destNode, destGid, target) {
 // Calls the server and sends the RSSI readings.
 function connectServer(list) {
     $.ajax({
-    url: 'http://145.90.76.92:8000',
+    url: 'http://192.168.1.192:8000',
     data: JSON.stringify(list),
     contentType: 'application/json',
     type: 'POST',      
@@ -307,9 +307,11 @@ function getRSSi(){
         $("#nextAppoint").hide();
         $("#map").show();
         
-        // execute autoUpdate function after every 5 seconds
+        // execute autoUpdate function after every 10 seconds
         window.setTimeout(autoUpdate, 5000);
-        var autoUpdate = setInterval(function () {update(destNode, destGid, target)}, 5000);
+        var autoUpdate = setInterval(function () {
+            WifiWizard.startScan(window.setTimeout(update(destNode, destGid, target), 5000), fail);
+        }, 5000);
 
     }); 
 
