@@ -307,9 +307,11 @@ function getRSSi(){
         $("#nextAppoint").hide();
         $("#map").show();
         
-        // execute autoUpdate function after every 5 seconds
-        window.setTimeout(autoUpdate, 10000);
-        var autoUpdate = setInterval(function () {update(destNode, destGid, target)}, 10000);
+        // execute autoUpdate function after every 10 seconds
+        window.setTimeout(autoUpdate, 5000);
+        var autoUpdate = setInterval(function () {
+            WifiWizard.startScan(window.setTimeout(update(destNode, destGid, target), 5000), fail);
+        }, 5000);
 
     }); 
 
